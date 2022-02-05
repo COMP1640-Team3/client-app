@@ -15,13 +15,15 @@ import {
   AlertTitle,
   AlertDescription,
 } from "@chakra-ui/react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
   // State
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorStatus, setErrorStatus] = useState(null);
-
+  const navigate = useNavigate();
+  const location = useLocation();
   // Action
 
   const handleEmailChange = (e) => setEmail(e.target.value);
@@ -29,7 +31,7 @@ const Login = () => {
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const resetError = (e) => setErrorStatus(null);
-
+  const redirectPath = location.state?.path || "/ideas";
 
   const handleLogin = async () => {
     let formData = new FormData();
@@ -38,7 +40,8 @@ const Login = () => {
     try {
       const response = await Api().post("/login", formData);
       localStorage.setItem("token", response.data.token);
-      window.location.reload();
+
+      navigate(redirectPath, { replace: true });
     } catch (error) {
       if (error.response.status === 422) {
         setErrorStatus(422);

@@ -8,6 +8,11 @@ import TopNav from "./components/Layout/TopNav";
 import Home from "./Views/Home";
 import NoMatch from "./components/NoMatch";
 import CheckIsAuthenticated from "./components/Guards/CheckIsAuthenticated";
+import Idea from "./components/Ideas/Idea";
+import { PostIdeas } from "./components/Ideas/PostIdeas";
+import RequiredAuth from "./components/Guards/RequiredAuth";
+
+// Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
 
 function App() {
@@ -34,7 +39,18 @@ function App() {
                   <Ideas />
                 </React.Suspense>
               }
-            />
+            >
+              <Route path=":ideaId" element={<Idea />} />
+
+              <Route
+                path="post-idea"
+                element={
+                  <RequiredAuth>
+                    <PostIdeas />
+                  </RequiredAuth>
+                }
+              />
+            </Route>
             <Route path="*" element={<NoMatch />} />
           </Routes>
         </Container>

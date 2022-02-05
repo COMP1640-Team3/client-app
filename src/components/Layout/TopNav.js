@@ -15,10 +15,13 @@ import {
   MenuGroup,
   MenuOptionGroup,
   MenuDivider,
+  Text,
 } from "@chakra-ui/react";
-import { ChevronDownIcon } from "@chakra-ui/icons";
+import { ChevronDownIcon, EmailIcon } from "@chakra-ui/icons";
 import "../../css/layouts/topnav.css";
 import Logout from "../Logout";
+import { useSelector } from "react-redux";
+import { userInfoSelector } from "../../app/reducers/authSlice";
 
 const TopNav = () => {
   const navStyle = ({ isActive }) => {
@@ -28,6 +31,8 @@ const TopNav = () => {
       textDecoration: isActive ? "underline" : "none",
     };
   };
+
+  const userInfo = useSelector(userInfoSelector);
 
   return (
     <>
@@ -49,6 +54,7 @@ const TopNav = () => {
 
           <Menu>
             <MenuButton
+              transition="all 0.2s"
               ml={4}
               colorScheme="blue"
               as={Button}
@@ -61,6 +67,20 @@ const TopNav = () => {
               <MenuItem>Create a Copy</MenuItem>
               <MenuItem>Mark as Draft</MenuItem>
               <MenuItem>Delete</MenuItem>
+            </MenuList>
+          </Menu>
+
+          <Menu>
+            <MenuButton
+              transition="all 0.2s"
+              ml={4}
+              colorScheme="blue"
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+            >
+              <i className="far fa-user-circle"> {userInfo.email}</i>
+            </MenuButton>
+            <MenuList>
               {/* If user is authenticated show logout */}
               {localStorage.getItem("token") && <Logout />}
             </MenuList>
