@@ -1,28 +1,39 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import Api from "../../api/Api";
+
+// Reducer Thunk
+export const getUserInfo = createAsyncThunk("auths/infoFetched", async () => {
+  try {
+    const response = await Api().get("/user");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+  }
+});
 
 const AuthSlice = createSlice({
   name: "authentications",
   initialState: {
-    userInfo: {},
+    userInfo: {
+      email: "",
+    },
   },
-  reducers: {
-    // updateAuth(state, action) {
-    //   state.email = action.payload;
-    //   state.isAuthenticated = true;
-    // },
-    // // User Logout
-    // logout(state, action) {
-    //   state.email = "";
-    //   state.isAuthenticated = false;
-    // },
+  reducers: {},
+
+  extraReducers: {
+    [getUserInfo.fulfilled]: (state, action) => {
+      state.userInfo.email = action.payload.email;
+    },
+    [getUserInfo.rejected]: (state, action) => {
+      alert("Error to get user info");
+    },
   },
 });
 
 // selector
-// export const isAuthenticatedSelector = (state) =>
-//   state.authReducer.isAuthenticated;
+export const userInfoSelector = (state) => state.authReducer.userInfo;
 // Reducer
 export const authReducer = AuthSlice.reducer;
 
 // Action export
-export const { updateAuth, logout } = AuthSlice.actions;
+// export const { updateAuth, logout } = AuthSlice.actions;
