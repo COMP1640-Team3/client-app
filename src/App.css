@@ -21,7 +21,10 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
 }
-
+/*.active {*/
+/*  color: cornflowerblue;*/
+/*  text-decoration: underline;*/
+/*}*/
 .App-link {
   color: rgb(112, 76, 182);
 }
