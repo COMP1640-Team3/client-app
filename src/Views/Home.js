@@ -1,18 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Login from "../Views/Auth/Login";
 import { Text } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import { getUserInfo, userInfoSelector } from "../app/reducers/authSlice";
+import { useSelector } from "react-redux";
+import { userInfoSelector } from "../app/reducers/authSlice";
 
 const Home = () => {
-  const dispatch = useDispatch();
   const userInfo = useSelector(userInfoSelector);
-
-  useEffect(() => {
-    if (localStorage.getItem("token")) {
-      dispatch(getUserInfo());
-    }
-  }, [dispatch]);
 
   return (
     <div>

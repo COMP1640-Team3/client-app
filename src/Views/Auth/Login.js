@@ -16,6 +16,8 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { updateUserInto } from "../../app/reducers/authSlice";
+import { useDispatch } from "react-redux";
 
 const Login = () => {
   // State
@@ -25,10 +27,7 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
   // Action
-
-  const handleEmailChange = (e) => setEmail(e.target.value);
-
-  const handlePasswordChange = (e) => setPassword(e.target.value);
+  const dispatch = useDispatch();
 
   const resetError = (e) => setErrorStatus(null);
   const redirectPath = location.state?.path || "/ideas";
@@ -39,6 +38,7 @@ const Login = () => {
     formData.append("password", password);
     try {
       const response = await Api().post("/login", formData);
+      dispatch(updateUserInto(response.data.user.email));
       localStorage.setItem("token", response.data.token);
 
       navigate(redirectPath, { replace: true });
@@ -65,7 +65,13 @@ const Login = () => {
         >
           <FormControl isRequired>
             <FormLabel htmlFor="email">Email address</FormLabel>
-            <Input id="email" type="email" onChange={handleEmailChange} />
+            <Input
+              id="email"
+              type="email"
+              onChange={(e) => {
+                setEmail(e.target.value);
+              }}
+            />
           </FormControl>
 
           <FormControl isRequired>
@@ -73,7 +79,9 @@ const Login = () => {
             <Input
               id="password"
               type="password"
-              onChange={handlePasswordChange}
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
             />
           </FormControl>
 
