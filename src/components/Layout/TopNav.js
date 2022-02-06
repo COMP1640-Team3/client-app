@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
+
 import {
   Center,
   Flex,
@@ -70,21 +71,24 @@ const TopNav = () => {
             </MenuList>
           </Menu>
 
-          <Menu>
-            <MenuButton
-              transition="all 0.2s"
-              ml={4}
-              colorScheme="blue"
-              as={Button}
-              rightIcon={<ChevronDownIcon />}
-            >
-              <i className="far fa-user-circle"> {userInfo.email}</i>
-            </MenuButton>
-            <MenuList>
-              {/* If user is authenticated show logout */}
-              {localStorage.getItem("token") && <Logout />}
-            </MenuList>
-          </Menu>
+          {/* User authenticated */}
+          {userInfo.email != "" && (
+            <Menu>
+              <MenuButton
+                transition="all 0.2s"
+                ml={4}
+                colorScheme="blue"
+                as={Button}
+                rightIcon={<ChevronDownIcon />}
+              >
+                <i className="far fa-user-circle"> {userInfo.email}</i>
+              </MenuButton>
+              <MenuList>
+                {/* If user is authenticated show logout */}
+                <Logout />
+              </MenuList>
+            </Menu>
+          )}
         </Box>
       </Flex>
     </>
