@@ -1,21 +1,34 @@
-import React from "react";
-import { Link } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
-import { Link as ReachLink } from "react-router-dom";
-import { Outlet } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link} from "@chakra-ui/react";
+import {AddIcon} from "@chakra-ui/icons";
+import {Link as ReachLink} from "react-router-dom";
+import {Outlet} from "react-router-dom";
+import Api from "../../api/Api";
 
 const Ideas = () => {
-  return (
-    <>
-      <div>Idea page</div>
+    const [ideas, setIdeas] = useState([])
+    const [page, setPage] = useState(1)
+    const handleGetIdeas = async (page) => {
+        try {
+            const response = await Api().get(`/ideas?page=${page}`)
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    useEffect(() => {
+        handleGetIdeas()
+    }, [page])
 
-      <Link as={ReachLink} to="post-idea" color="teal.500">
-        Post New Idea <AddIcon mx="2px" />
-      </Link>
+    return (<>
+        <div>Idea page</div>
 
-      <Outlet />
-    </>
-  );
+        <Link as={ReachLink} to="post-idea" color="teal.500">
+            Post New Idea <AddIcon mx="2px"/>
+        </Link>
+
+        <Outlet/>
+    </>);
 };
 
 export default Ideas;
