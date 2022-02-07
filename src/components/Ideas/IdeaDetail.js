@@ -8,6 +8,7 @@ import {
 } from "../../app/reducers/ideasSlice";
 // Chakra UI
 import { Box, Text, Heading } from "@chakra-ui/react";
+import Comment from "./Comment";
 
 const IdeaDetail = () => {
   const { ideaId } = useParams();
@@ -46,6 +47,11 @@ const IdeaDetail = () => {
         <Text mt={2} color={"telegram.600"} align={"left"}>
           Author: {idea?.user?.email}
         </Text>
+      </Box>
+
+      {/* Comments */}
+      <Box>
+        <Comment ideaId={ideaId} />
       </Box>
     </div>
   );
