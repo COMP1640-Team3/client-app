@@ -17,12 +17,24 @@ export const getDetailIdea = createAsyncThunk(
     }
   }
 );
+export const getCommentOfIdea = createAsyncThunk(
+  "idea/comments/commentsFetched",
+  async (ideaId) => {
+    try {
+      const response = await Api().get(`/ideas/${ideaId}/comments`);
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+);
 
 const IdeaSlice = createSlice({
   name: "ideas",
   initialState: {
     idea: {},
     totalLike: "",
+    comments: {},
   },
 
   reducers: {
@@ -37,12 +49,16 @@ const IdeaSlice = createSlice({
       state.idea = action.payload.idea;
       state.totalLike = action.payload.totalLikeIdea;
     },
+    [getCommentOfIdea.fulfilled]: (state, action) => {
+      state.comments = action.payload;
+    },
   },
 });
 
 // selector
 export const ideaSelector = (state) => state.ideasReducer.idea;
 export const totalLikeOfIdeaSelector = (state) => state.ideasReducer.totalLike;
+export const commentIdeaSelector = (state) => state.ideasReducer.comments;
 // Reducer
 export const ideasReducer = IdeaSlice.reducer;
 
