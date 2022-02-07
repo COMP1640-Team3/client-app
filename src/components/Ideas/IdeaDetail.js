@@ -9,6 +9,7 @@ import {
 // Chakra UI
 import { Box, Text, Heading } from "@chakra-ui/react";
 import Comment from "./Comment";
+import PostCommentForm from "../Comments/PostCommentForm";
 
 const IdeaDetail = () => {
   const { ideaId } = useParams();
@@ -48,6 +49,9 @@ const IdeaDetail = () => {
           Author: {idea?.user?.email}
         </Text>
       </Box>
+
+      {/* form post comment  */}
+      <PostCommentForm ideaId={ideaId} />
 
       {/* Comments */}
       <Box>
