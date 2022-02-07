@@ -28,7 +28,7 @@ const Ideas = () => {
       setData({
         ideas: response.data,
       });
-      console.log(state);
+      // console.log(state);
     } catch (error) {
       console.log(error);
     }
@@ -60,9 +60,9 @@ const Ideas = () => {
           </Tr>
         </Thead>
         <Tbody>
-          {state?.ideas?.data?.map((idea) => (
-            <Tr key={idea.id}>
-              <Td>{idea.id}</Td>
+          {state?.ideas?.data?.map((idea, index) => (
+            <Tr key={index}>
+              <Td>{index}</Td>
               <Td>{idea.title}</Td>
               <Td>{idea.department.description}</Td>
               <Td>{idea.category.name}</Td>
