@@ -4,28 +4,24 @@ import Api from "../../api/Api";
 export const getDetailIdea = createAsyncThunk(
   "idea/ideaFetched",
   async (ideaId) => {
-    try {
-      const idea = await Api().get(`/ideas/${ideaId}`);
-      const totalLike = await Api().get(`/ideas/${ideaId}/likes`);
-      //   console.log(response.data);
-      return {
-        idea: idea.data,
-        totalLikeIdea: totalLike.data,
-      };
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await Api().get(`/ideas/${ideaId}`);
+    return res.data;
   }
 );
+
+export const getTotalLike = createAsyncThunk(
+  "idea/totalLikeFetched",
+  async (ideaId) => {
+    const res = await Api().get(`/ideas/${ideaId}/likes`);
+    return res.data;
+  }
+);
+
 export const getCommentOfIdea = createAsyncThunk(
   "idea/comments/commentsFetched",
   async (ideaId) => {
-    try {
-      const response = await Api().get(`/ideas/${ideaId}/comments`);
-      return response;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await Api().get(`/ideas/${ideaId}/comments`);
+    return res.data;
   }
 );
 
@@ -33,8 +29,8 @@ const IdeaSlice = createSlice({
   name: "ideas",
   initialState: {
     idea: {},
-    totalLike: "",
-    comments: {},
+    totalLike: 0,
+    comments: [],
   },
 
   reducers: {
@@ -46,8 +42,10 @@ const IdeaSlice = createSlice({
   extraReducers: {
     [getDetailIdea.fulfilled]: (state, action) => {
       //   console.log(action.payload);
-      state.idea = action.payload.idea;
-      state.totalLike = action.payload.totalLikeIdea;
+      state.idea = action.payload;
+    },
+    [getTotalLike.fulfilled]: (state, action) => {
+      state.totalLike = action.payload;
     },
     [getCommentOfIdea.fulfilled]: (state, action) => {
       state.comments = action.payload;
