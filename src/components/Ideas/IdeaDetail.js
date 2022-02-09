@@ -7,19 +7,40 @@ import {
   totalLikeOfIdeaSelector,
 } from "../../app/reducers/ideasSlice";
 // Chakra UI
-import { Box, Text, Heading } from "@chakra-ui/react";
+import { Box, Text, Heading, Button } from "@chakra-ui/react";
 import Comments from "./Comments/Comments";
 import PostCommentForm from "../Comments/PostCommentForm";
+import Api from "../../api/Api";
 
 const IdeaDetail = () => {
+  const [isExistFile, setIsExistFile] = useState(false)
   const { ideaId } = useParams();
   const dispatch = useDispatch();
 
   const idea = useSelector(ideaSelector);
   const totalLikeIdea = useSelector(totalLikeOfIdeaSelector);
+  const handleCheckIdeaHasPDFFile = async () => {
+    try {
+      const response = await Api().get(`/ideas/${ideaId}/files`)
+
+      if (Object.keys(response.data).length === 0) {
+        setIsExistFile(false)
+      } else {
+        setIsExistFile(true)
+      }
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const handleDownloadPDFFile = () => {
+    window.open(`http://127.0.0.1:8000/api/ideas/${ideaId}/download`, '_blank').focus();
+  }
 
   useEffect(() => {
     dispatch(getDetailIdea(ideaId));
+    // Check file PDF of idea
+    handleCheckIdeaHasPDFFile()
   }, [dispatch]);
 
   return (
@@ -27,6 +48,13 @@ const IdeaDetail = () => {
       <Heading as={"h1"} size={"xl"}>
         Title: {idea?.title}
       </Heading>
+
+      {/* Button dowload file */}
+      {isExistFile && (<>
+        <Button onClick={handleDownloadPDFFile}>
+          Dowload idea as a pdf file
+        </Button>
+      </>)}
 
       <Box
         mt={5}

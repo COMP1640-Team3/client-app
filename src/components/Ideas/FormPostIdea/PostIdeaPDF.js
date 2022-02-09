@@ -10,6 +10,7 @@ import {
   Button,
   Alert,
   Text,
+  Checkbox,
   AlertIcon,
   AlertTitle,
   AlertDescription,
@@ -33,6 +34,7 @@ const PostIdeaPDF = () => {
   const [categories, setCategories] = useState([]);
   const [selectedFile, setSelectedFile] = useState({});
   const [isFilePicked, setIsFilePicked] = useState(false);
+  const [isHiddenPost, setIsHiddenPost] = useState(false);
   const [resStatus, setResStatus] = useState(null);
   const [error, setError] = useState({});
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -56,6 +58,7 @@ const PostIdeaPDF = () => {
     formData.append("title", title);
     formData.append("category_id", categoryId);
     formData.append("content", content)
+    formData.append('is_hidden', Number(isHiddenPost))
     formData.append('file', selectedFile);
     // for (var pair of formData.entries()) {
     //   console.log(pair[0] + ', ' + pair[1]);
@@ -138,7 +141,11 @@ const PostIdeaPDF = () => {
       ) : (
         <p>Select a file to show details</p>
       )}
-
+      <FormControl mt='2'>
+        {isHiddenPost ? <Text color='red.500'>This post will hidden</Text> : <Text color='green.500'>This post will visible</Text>}
+        <div></div>
+        <Checkbox value={isHiddenPost} onChange={() => { setIsHiddenPost(!isHiddenPost) }} defaultIsChecked={isHiddenPost}>Is hidden post</Checkbox>
+      </FormControl>
       <Button
         onClick={openSelectFile}
         mt={4}

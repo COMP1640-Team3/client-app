@@ -3,6 +3,7 @@ import {
   FormControl,
   FormLabel,
   Input,
+  Text,
   Select,
   Textarea,
   Box,
@@ -19,7 +20,8 @@ import {
   ModalFooter,
   ModalBody,
   ModalCloseButton,
-  useDisclosure
+  useDisclosure,
+  Checkbox
 } from "@chakra-ui/react";
 
 import Api from "../../../api/Api";
@@ -29,6 +31,7 @@ const PostIdeaManual = () => {
   const [categoryId, setCategoryId] = useState(1);
   const [content, setContent] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isHiddenPost, setIsHiddenPost] = useState(false);
   const [resStatus, setResStatus] = useState(null);
   const [error, setError] = useState('');
 
@@ -49,6 +52,7 @@ const PostIdeaManual = () => {
       formData.append("title", title);
       formData.append("category_id", categoryId);
       formData.append("content", content);
+      formData.append('is_hidden', Number(isHiddenPost))
 
       await Api().post(`/staffs/ideas`, formData);
       setContent("");
@@ -109,6 +113,11 @@ const PostIdeaManual = () => {
             }}
             placeholder="Enter content of idea here"
           />
+        </FormControl>
+        <FormControl mt='2'>
+          {isHiddenPost ? <Text color='red.500'>This post will hidden</Text> : <Text color='green.500'>This post will visible</Text>}
+          <div></div>
+          <Checkbox value={isHiddenPost} onChange={() => { setIsHiddenPost(!isHiddenPost) }} defaultIsChecked={isHiddenPost}>Is hidden post</Checkbox>
         </FormControl>
         {/* <Button
           onClick={handlePostIdeaManual}
