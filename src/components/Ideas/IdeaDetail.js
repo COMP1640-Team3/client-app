@@ -8,7 +8,7 @@ import {
 } from "../../app/reducers/ideasSlice";
 // Chakra UI
 import { Box, Text, Heading } from "@chakra-ui/react";
-import Comment from "./Comment";
+import Comments from "./Comments/Comments";
 import PostCommentForm from "../Comments/PostCommentForm";
 
 const IdeaDetail = () => {
@@ -18,12 +18,9 @@ const IdeaDetail = () => {
   const idea = useSelector(ideaSelector);
   const totalLikeIdea = useSelector(totalLikeOfIdeaSelector);
 
-  const handleFetchIdea = async () => {
-    dispatch(getDetailIdea(ideaId));
-  };
   useEffect(() => {
-    handleFetchIdea();
-  }, []);
+    dispatch(getDetailIdea(ideaId));
+  }, [dispatch]);
 
   return (
     <div>
@@ -43,7 +40,7 @@ const IdeaDetail = () => {
           {idea?.content}
         </Text>
         <Text fontSize={"sm"} align={"right"} color="red.500">
-          Total Like: {totalLikeIdea} <i className="far fa-thumbs-up"></i>
+          {/* Total Like: {totalLikeIdea} <i className="far fa-thumbs-up"></i> */}
         </Text>
         <Text mt={2} color={"telegram.600"} align={"left"}>
           Author: {idea?.user?.email}
@@ -55,7 +52,7 @@ const IdeaDetail = () => {
 
       {/* Comments */}
       <Box>
-        <Comment ideaId={ideaId} />
+        <Comments ideaId={ideaId} />
       </Box>
     </div>
   );

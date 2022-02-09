@@ -21,8 +21,10 @@ const PostCommentForm = ({ ideaId }) => {
       try {
         let formData = new FormData();
         formData.append("content", textComment);
-        const response = await Api().post(`ideas/${ideaId}/comments`, formData);
+        await Api().post(`ideas/${ideaId}/comments`, formData);
         dispatch(getCommentOfIdea(ideaId));
+        alert("Post comment success");
+        setTextComment("");
       } catch (error) {
         console.log(error);
       }
