@@ -16,6 +16,9 @@ import { getUserInfo } from "./app/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import PostIdeaPDF from "./components/Ideas/FormPostIdea/PostIdeaPDF";
 import PostIdeaManual from "./components/Ideas/FormPostIdea/PostIdeaManual";
+import Dashboard from "./Views/Admin/Dashboard";
+import AdminRoutes from "./routes/Admin/AdminRoutes";
+import CreateUser from "./Views/Admin/User/CreateUser";
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
 
@@ -50,14 +53,20 @@ function App() {
             <Route
               path="ideas"
               element={
-                <React.Suspense fallback={<>Loading...</>}>
-                  <Ideas />
-                </React.Suspense>
+                <RequiredAuth>
+                  <React.Suspense fallback={<>Loading...</>}>
+                    <Ideas />
+                  </React.Suspense>
+                </RequiredAuth>
               }
             />
 
             {/* Detail idea */}
-            <Route path="ideas/:ideaId" element={<IdeaDetail />} />
+            <Route path="ideas/:ideaId" element={
+              <RequiredAuth>
+                <IdeaDetail />
+              </RequiredAuth>
+            } />
 
             {/* Post new idea */}
             <Route
@@ -73,6 +82,16 @@ function App() {
               <Route path="manual" element={<PostIdeaManual />} />
               <Route path="via-pdf" element={<PostIdeaPDF />} />
             </Route>
+
+            <Route path="/admins" element={<Dashboard />}>
+
+            </Route>
+            {/* Admin routes */}
+            <Route path="/admins" element={<Dashboard />}>
+              <Route index element={<CreateUser />} />
+              <Route path="users" element={<CreateUser />} />
+            </Route>
+
 
             <Route path="*" element={<NoMatch />} />
             <Route path="example" element={<Example />} />
