@@ -72,7 +72,7 @@ const TopNav = () => {
           </Menu>
 
           {/* User authenticated */}
-          {userInfo.email != "" && (
+          {localStorage.getItem('token') && (
             <Menu>
               <MenuButton
                 transition="all 0.2s"
