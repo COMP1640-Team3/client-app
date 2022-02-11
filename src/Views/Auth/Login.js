@@ -16,8 +16,9 @@ import {
   AlertDescription,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { updateUserInto } from "../../app/reducers/authSlice";
+import { getUserRole, updateUserInto } from "../../app/reducers/authSlice";
 import { useDispatch } from "react-redux";
+
 
 const Login = () => {
   // State
@@ -40,8 +41,14 @@ const Login = () => {
       const response = await Api().post("/login", formData);
       dispatch(updateUserInto(response.data.user.email));
       localStorage.setItem("token", response.data.token);
-
+      if (localStorage.getItem("token")) {
+        const res2 = await Api().get('/auth/users');
+        if (res2.data) {
+          localStorage.setItem("role", JSON.stringify(res2.data.name))
+        }
+      }
       navigate(redirectPath, { replace: true });
+      window.location.reload();
     } catch (error) {
       if (error.response.status === 422) {
         setErrorStatus(422);

@@ -12,13 +12,13 @@ import IdeaDetail from "./components/Ideas/IdeaDetail";
 import { PostIdeas } from "./components/Ideas/PostIdeas";
 import RequiredAuth from "./components/Guards/RequiredAuth";
 import Example from "./Views/Example";
-import { getUserInfo } from "./app/reducers/authSlice";
+import { getUserInfo, getUserRole } from "./app/reducers/authSlice";
 import { useDispatch } from "react-redux";
 import PostIdeaPDF from "./components/Ideas/FormPostIdea/PostIdeaPDF";
 import PostIdeaManual from "./components/Ideas/FormPostIdea/PostIdeaManual";
 import Dashboard from "./Views/Admin/Dashboard";
-import AdminRoutes from "./routes/Admin/AdminRoutes";
 import CreateUser from "./Views/Admin/User/CreateUser";
+import CheckIsAdmin from "./components/Guards/CheckIsAdmin";
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
 
@@ -30,6 +30,7 @@ function App() {
 
     if (token) {
       dispatch(getUserInfo());
+      dispatch(getUserRole());
     }
   }, [dispatch]);
 
@@ -87,7 +88,11 @@ function App() {
 
             </Route>
             {/* Admin routes */}
-            <Route path="/admins" element={<Dashboard />}>
+            <Route path="/admins" element={
+              <CheckIsAdmin>
+                <Dashboard />
+              </CheckIsAdmin>
+            }>
               <Route index element={<CreateUser />} />
               <Route path="users" element={<CreateUser />} />
             </Route>
