@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import Api from "../../api/Api";
 
 export const getDetailIdea = createAsyncThunk(
-  "idea/ideaFetched",
+  "ideas/ideaFetched",
   async (ideaId) => {
     const res = await Api().get(`/ideas/${ideaId}`);
     return res.data;
@@ -10,7 +10,7 @@ export const getDetailIdea = createAsyncThunk(
 );
 
 export const getTotalLike = createAsyncThunk(
-  "idea/totalLikeFetched",
+  "ideas/totalLikeFetched",
   async (ideaId) => {
     const res = await Api().get(`/ideas/${ideaId}/likes`);
     return res.data;
@@ -18,7 +18,7 @@ export const getTotalLike = createAsyncThunk(
 );
 
 export const getCommentOfIdea = createAsyncThunk(
-  "idea/comments/commentsFetched",
+  "ideas/comments/commentsFetched",
   async (ideaId) => {
     const res = await Api().get(`/ideas/${ideaId}/comments`);
     return res.data;

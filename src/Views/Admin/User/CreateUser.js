@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import {
     FormControl,
     FormLabel,
@@ -16,33 +16,43 @@ import {
     Select,
     useToast
 } from '@chakra-ui/react'
-import { PhoneIcon } from '@chakra-ui/icons'
+import {PhoneIcon} from '@chakra-ui/icons'
 import Api from '../../../api/Api'
 
 const initState = {
-    email: '', userName: '', password: '', passwordConfirmation: '', phone: '', address: '', roleId: '',
+    email: '',
+    userName: '',
+    password: '',
+    passwordConfirmation: '',
+    phone: '',
+    address: '',
+    roleId: '',
+    departmentId: ''
 }
 const CreateUser = () => {
     const toast = useToast()
     const [show, setShow] = useState(false)
     const [roles, setRoles] = useState()
-    const [resStatus, setResStatus] = useState(null);
+    const [departments, setDepartments] = useState()
     const [error, setError] = useState('');
 
-    const [{ userName, email, password, passwordConfirmation, phone, address, roleId }, setState] = useState(initState);
+    const [{
+        userName, email, password, passwordConfirmation, phone, address, roleId, departmentId
+    }, setState] = useState(initState);
     const [gender, setGender] = useState('0');
 
     const handleClick = () => setShow(!show) // show password or not
 
     const onChange = (e) => {
+        //e mean event
         console.log(e.target.name);
-        const { name, value } = e.target // Destructuring assignment
+        const {name, value} = e.target // Destructuring assignment
         setState((prevState) => ({
             ...prevState, [name]: value // set computed property name == new value
         }))
     }
     const clearState = () => {
-        setState({ ...initState });
+        setState({...initState});
     };
 
     const handleAddNewUser = async () => {
@@ -54,19 +64,18 @@ const CreateUser = () => {
             formData.append('address', address)
             formData.append('gender', gender)
             formData.append('role_id', roleId)
+            formData.append('department_id', departmentId)
             formData.append('password', password)
             formData.append('password_confirmation', passwordConfirmation)
 
-            const res = await Api().post('/admins/users', formData)
-            if (res.status === 201) {
-                toast({
-                    title: 'Account created.',
-                    description: "We've created your account for you.",
-                    status: 'success',
-                    duration: 9000,
-                    isClosable: true,
-                })
-            }
+            await Api().post('/admins/users', formData)
+            toast({
+                title: 'Account created.',
+                description: "We've created your account for you.",
+                status: 'success',
+                duration: 9000,
+                isClosable: true,
+            })
         } catch (e) {
             console.log(e)
             if (e.response.status === 422) {
@@ -92,9 +101,20 @@ const CreateUser = () => {
             console.log(error)
         }
     }
+    const handleFetchDepartmentId = async () => {
+        try {
+            const res = await Api().get('/admins/departments')
+            if (res.data) {
+                setDepartments(res.data)
+            }
+        } catch (e) {
+            console.log(error)
+        }
+    }
 
     useEffect(() => {
         handleFetchRoleId()
+        handleFetchDepartmentId()
     }, [])
 
     return (<>
@@ -106,7 +126,7 @@ const CreateUser = () => {
                     <FormControl w='90%'>
                         <FormLabel htmlFor='email'>Email address</FormLabel>
                         <Input onChange={onChange} value={email} placeholder='Eg: email@gmail.com' id='email'
-                            name='email' type='email' />
+                               name='email' type='email'/>
                         <FormHelperText color={'red.500'} textAlign='left'>{error && error?.email}</FormHelperText>
                     </FormControl>
                 </Center>
@@ -114,7 +134,7 @@ const CreateUser = () => {
                     <FormControl w='90%'>
                         <FormLabel htmlFor='userName'>User Name</FormLabel>
                         <Input onChange={onChange} value={userName} placeholder='Eg: your name' id='name'
-                            name='userName' type='text' />
+                               name='userName' type='text'/>
                         <FormHelperText color={'red.500'} textAlign='left'>{error && error?.name}</FormHelperText>
                     </FormControl>
                 </Center>
@@ -168,20 +188,20 @@ const CreateUser = () => {
                         <InputGroup>
                             <InputLeftElement
                                 pointerEvents='none'
-                                children={<PhoneIcon color='gray.300' />}
+                                children={<PhoneIcon color='gray.300'/>}
                             />
                             <Input onChange={onChange} value={phone} type='tel' id='phone' name="phone"
-                                placeholder='Phone number' />
+                                   placeholder='Phone number'/>
                         </InputGroup>
                         <FormHelperText color={'red.500'}
-                            textAlign='left'>{error && error?.phone_number}</FormHelperText>
+                                        textAlign='left'>{error && error?.phone_number}</FormHelperText>
                     </FormControl>
                 </Center>
                 <Center>
                     <FormControl w='90%'>
                         <FormLabel htmlFor='address'>Address</FormLabel>
                         <Input onChange={onChange} value={address} placeholder='Eg: your name' id='address'
-                            name='address' type='text' />
+                               name='address' type='text'/>
                         <FormHelperText color={'red.500'} textAlign='left'>{error && error?.address}</FormHelperText>
                     </FormControl>
                 </Center>
@@ -200,12 +220,27 @@ const CreateUser = () => {
                 <Center>
                     <FormControl w='50%'>
                         <FormLabel htmlFor='roleId'>Role</FormLabel>
-                        <Select textAlign='left' variant='filled' name='roleId' onChange={onChange} id='roleId'
-                            placeholder='Select role'>
+                        <Select textAlign='left' variant='filled' name='roleId'
+                                onChange={onChange} id='roleId'
+                                placeholder='Select role'>
                             {roles && roles.map((role) => <option key={role.id}
-                                value={role.id}>{role.name.toUpperCase()}</option>)}
+                                                                  value={role.id}>{role.name.toUpperCase()}</option>)}
                         </Select>
                         <FormHelperText color={'red.500'} textAlign='left'>{error && error?.role_id}</FormHelperText>
+                    </FormControl>
+                </Center>
+                <Center>
+                    <FormControl w='50%'>
+                        <FormLabel htmlFor='roleId'>Department</FormLabel>
+                        <Select textAlign='left' variant='filled'
+                                name='departmentId' onChange={onChange}
+                                id='departmentId'
+                                placeholder='Select department'>
+                            {departments && departments.map((department) => <option key={department.id}
+                                                                                    value={department.id}>{department.name.toUpperCase()}</option>)}
+                        </Select>
+                        <FormHelperText color={'red.500'}
+                                        textAlign='left'>{error && error?.department_id}</FormHelperText>
                     </FormControl>
                 </Center>
                 <Button m='2' onClick={clearState}>Clear input</Button>
