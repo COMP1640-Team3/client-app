@@ -7,6 +7,10 @@ import {
   Input,
   Center,
   CloseButton,
+  InputGroup,
+  Stack,
+  VStack,
+  InputRightElement
 } from "@chakra-ui/react";
 import Api from "../../api/Api";
 import {
@@ -25,10 +29,12 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorStatus, setErrorStatus] = useState(null);
+  const [show, setShow] = useState(false)
   const navigate = useNavigate();
   const location = useLocation();
   // Action
   const dispatch = useDispatch();
+  const handleClick = () => setShow(!show) // show password or not
 
   const resetError = (e) => setErrorStatus(null);
   const redirectPath = location.state?.path || "/ideas";
@@ -81,15 +87,24 @@ const Login = () => {
             />
           </FormControl>
 
-          <FormControl isRequired>
-            <FormLabel htmlFor="email">Password</FormLabel>
-            <Input
-              id="password"
-              type="password"
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-            />
+          <FormControl w='90%'>
+            <FormLabel htmlFor='password'>Password</FormLabel>
+            <InputGroup size='md'>
+              <Input
+                pr='4.5rem'
+                id='password'
+                name="password"
+                value={password}
+                onChange={(e) => { setPassword(e.target.value) }}
+                type={show ? 'text' : 'password'}
+                placeholder='Enter password'
+              />
+              <InputRightElement width='4.5rem'>
+                <Button h='1.75rem' size='sm' onClick={handleClick}>
+                  {show ? 'Hide' : 'Show'}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
           </FormControl>
 
           <FormControl>

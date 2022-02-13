@@ -54,6 +54,8 @@ const ProfileDetail = () => {
                 isClosable: true,
             })
             dispatch(getProfileDetail())
+            setError('')
+            setState({ ...initState })
         } catch (e) {
             console.log(e)
             if (e.response.status === 422) {
@@ -112,15 +114,15 @@ const ProfileDetail = () => {
 
         <Box my={10} boxShadow='outline' p='6' rounded='md'>
             <Heading>Change profile</Heading>
-            <FormControl>
+            <FormControl isRequired>
                 <FormLabel>NAME</FormLabel>
                 <Input onChange={onChange} value={userName} placeholder='Eg: your name' id='name'
                     name='userName' type='text' />
                 <FormHelperText color={'red.500'} textAlign='left'>{error && error?.name}</FormHelperText>
             </FormControl>
-            <FormControl>
-                <FormLabel>PHONE</FormLabel>
 
+            <FormControl isRequired>
+                <FormLabel>PHONE</FormLabel>
                 <InputGroup>
                     <InputLeftElement
                         pointerEvents='none'
@@ -128,17 +130,18 @@ const ProfileDetail = () => {
                     />
                     <Input onChange={onChange} value={phone} type='tel' id='phone' name="phone"
                         placeholder='Phone number' />
-                    <FormHelperText color={'red.500'} textAlign='left'>{error && error?.phone}</FormHelperText>
                 </InputGroup>
-
+                <FormHelperText color={'red.500'} textAlign='left'>{error && error?.phone_number}</FormHelperText>
             </FormControl>
-            <FormControl>
+
+            <FormControl isRequired>
                 <FormLabel>ADDRESS</FormLabel>
                 <Input onChange={onChange} value={address} placeholder='Eg: your name' id='address'
                     name='address' type='text' />
                 <FormHelperText color={'red.500'} textAlign='left'>{error && error?.address}</FormHelperText>
             </FormControl>
-            <FormControl as='fieldset' w="90%">
+
+            <FormControl as='fieldset' isRequired>
                 <FormLabel as='legend'>Gender</FormLabel>
                 <RadioGroup onChange={setGender} value={gender}>
                     <HStack spacing='24px'>
