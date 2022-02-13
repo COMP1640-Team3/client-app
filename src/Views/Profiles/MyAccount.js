@@ -14,20 +14,12 @@ const MyAccount = () => {
                     </Button>
                 </Link>
 
-                {/*Edit profile page*/}
-                <Link to='edit-profile'>
+                {/*Change password page*/}
+                <Link to='change-password'>
                     <Button bg='tomato'>
-                        Edit Profile
+                    Change password
                     </Button>
                 </Link>
-
-                {/*Change password page*/}
-                {/*<Link>*/}
-                {/*    <Box w='40px' h='40px' bg='pink.100'>*/}
-                {/*        Change current password*/}
-                {/*    </Box>*/}
-                {/*</Link>*/}
-
             </HStack>
         </Center>
 
