@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
+import React, {useEffect} from "react";
 import "./App.css";
-import { Container } from "@chakra-ui/react";
-import { Routes, Route } from "react-router-dom";
+import {Container} from "@chakra-ui/react";
+import {Routes, Route} from "react-router-dom";
 // Component
 import Login from "./Views/Auth/Login";
 import TopNav from "./components/Layout/TopNav";
@@ -9,11 +9,11 @@ import Home from "./Views/Home";
 import NoMatch from "./components/NoMatch";
 import CheckIsAuthenticated from "./components/Guards/CheckIsAuthenticated";
 import IdeaDetail from "./components/Ideas/IdeaDetail";
-import { PostIdeas } from "./components/Ideas/PostIdeas";
+import {PostIdeas} from "./components/Ideas/PostIdeas";
 import RequiredAuth from "./components/Guards/RequiredAuth";
 import Example from "./Views/Example";
-import { getUserInfo, getUserRole } from "./app/reducers/authSlice";
-import { useDispatch } from "react-redux";
+import {getUserInfo, getUserRole} from "./app/reducers/authSlice";
+import {useDispatch} from "react-redux";
 import PostIdeaPDF from "./components/Ideas/FormPostIdea/PostIdeaPDF";
 import PostIdeaManual from "./components/Ideas/FormPostIdea/PostIdeaManual";
 import Dashboard from "./Views/Admin/Dashboard";
@@ -22,6 +22,9 @@ import CheckIsAdmin from "./components/Guards/CheckIsAdmin";
 import ProfileDetail from "./Views/Profiles/Children/ProfileDetail";
 import MyAccount from "./Views/Profiles/MyAccount";
 import ChangePassword from "./Views/Profiles/Children/ChangePassword";
+import Categories from "./Views/QA-Manger/Category/Categories";
+import QaHome from "./Views/QA-Manger/Home";
+import CategoryDetail from "./Views/QA-Manger/Category/CategoryDetail";
 
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
@@ -38,86 +41,84 @@ function App() {
         }
     }, [dispatch]);
 
-    return (
-        <div className="App">
-            <>
-                <Container maxW="container.xl">
+    return (<div className="App">
+        <>
+            <Container maxW="container.xl">
 
-                    {/* Navigation bar */}
-                    <TopNav />
+                {/* Navigation bar */}
+                <TopNav/>
 
-                    <Routes>
-                        <Route path="/" element={<Home />} />
-                        {/* Login route */}
-                        <Route
-                            path="login"
-                            element={
-                                <CheckIsAuthenticated>
-                                    <Login />
-                                </CheckIsAuthenticated>
-                            }
-                        />
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    {/* Login route */}
+                    <Route
+                        path="login"
+                        element={<CheckIsAuthenticated>
+                            <Login/>
+                        </CheckIsAuthenticated>}
+                    />
 
-                        {/* Idea routes */}
-                        <Route
-                            path="ideas"
-                            element={
-                                <RequiredAuth>
-                                    <React.Suspense fallback={<>Loading...</>}>
-                                        <Ideas />
-                                    </React.Suspense>
-                                </RequiredAuth>
-                            }
-                        />
+                    {/* Idea routes */}
+                    <Route
+                        path="ideas"
+                        element={<RequiredAuth>
+                            <React.Suspense fallback={<>Loading...</>}>
+                                <Ideas/>
+                            </React.Suspense>
+                        </RequiredAuth>}
+                    />
 
-                        {/* Detail idea */}
-                        <Route path="ideas/:ideaId" element={
-                            <RequiredAuth>
-                                <IdeaDetail />
-                            </RequiredAuth>
-                        } />
+                    {/* Detail idea */}
+                    <Route path="ideas/:ideaId" element={<RequiredAuth>
+                        <IdeaDetail/>
+                    </RequiredAuth>}/>
 
-                        {/* Post new idea */}
-                        <Route
-                            path="post-idea"
-                            element={
-                                <RequiredAuth>
-                                    <PostIdeas />
-                                </RequiredAuth>
-                            }
-                        >
-                            {/* Manual post idea is index child */}
-                            <Route index element={<PostIdeaManual />} />
-                            <Route path="manual" element={<PostIdeaManual />} />
-                            <Route path="via-pdf" element={<PostIdeaPDF />} />
-                        </Route>
+                    {/* Post new idea */}
+                    <Route
+                        path="post-idea"
+                        element={<RequiredAuth>
+                            <PostIdeas/>
+                        </RequiredAuth>}
+                    >
+                        {/* Manual post idea is index child */}
+                        <Route index element={<PostIdeaManual/>}/>
+                        <Route path="manual" element={<PostIdeaManual/>}/>
+                        <Route path="via-pdf" element={<PostIdeaPDF/>}/>
+                    </Route>
 
-                        {/* Profile routes */}
-                        <Route path="/my-account" element={<MyAccount />}>
-                            <Route index element={<ProfileDetail />} />
-                            <Route path='profiles' element={<ProfileDetail />} />
-                            <Route path='change-password' element={<ChangePassword />} />
-                        </Route>
+                    {/* Profile routes */}
+                    <Route path="/my-account" element={<MyAccount/>}>
+                        <Route index element={<ProfileDetail/>}/>
+                        <Route path='profiles' element={<ProfileDetail/>}/>
+                        <Route path='change-password' element={<ChangePassword/>}/>
+                    </Route>
 
-                        {/* Admin routes */}
-                        <Route path="/admins" element={
-                            <CheckIsAdmin>
-                                <Dashboard />
-                            </CheckIsAdmin>
-                        }>
-                            <Route index element={<CreateUser />} />
-                            <Route path="users" element={<CreateUser />} />
-                        </Route>
+                    {/* Qa manager routes*/}
+                    <Route path="/qa-managers" element={<QaHome/>}>
+                        <Route index element={<Categories/>}/>
+                        <Route path="categories" element={<Categories/>}/>
 
-                        {/* 404 */}
-                        <Route path="*" element={<NoMatch />} />
-                        <Route path="example" element={<Example />} />
+                        {/* Detail category*/}
+                        <Route path="categories/:categoryId" element={<CategoryDetail/>}/>
 
-                    </Routes>
-                </Container>
-            </>
-        </div>
-    );
+                    </Route>
+
+                    {/* Admin routes */}
+                    <Route path="/admins" element={<CheckIsAdmin>
+                        <Dashboard/>
+                    </CheckIsAdmin>}>
+                        <Route index element={<CreateUser/>}/>
+                        <Route path="users" element={<CreateUser/>}/>
+                    </Route>
+
+                    {/* 404 */}
+                    <Route path="*" element={<NoMatch/>}/>
+                    <Route path="example" element={<Example/>}/>
+
+                </Routes>
+            </Container>
+        </>
+    </div>);
 }
 
 export default App;
