@@ -94,6 +94,7 @@ function App() {
                     </Route>
 
                     {/* Qa manager routes*/}
+                    // TODO: lam cai authenticate cho thang nay
                     <Route path="/qa-managers" element={<QaHome/>}>
                         <Route index element={<Categories/>}/>
                         <Route path="categories" element={<Categories/>}/>
