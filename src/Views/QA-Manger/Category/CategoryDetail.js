@@ -1,5 +1,5 @@
 import {Box, Button, ButtonGroup, Center, toast, useToast} from "@chakra-ui/react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Api from "../../../api/Api";
 import {
@@ -18,6 +18,8 @@ const CategoryDetail = () => {
     const [responseStatus, setResponseStatus] = useState(0);
     const toast = useToast()
     const [error, setError] = useState({})
+
+    const navigate = useNavigate()
 
     const onChangeInput = (e) => {
         // console.log(e.target.name)
@@ -80,18 +82,27 @@ const CategoryDetail = () => {
                 if (e.response.status === 422) {
                     setError(e.response.data)
                 }
-                console.log('error update category: ', e)
+                // console.log('error update category: ', e)
             }
         }
     }
     const handleDeleteCategory = async () => {
         try {
-            let formData = {name, description}
-            const res = await Api().put(`qa-managers/categories/${categoryId}`, formData);
-            console.log(res.data)
+            const res = await Api().delete(`qa-managers/categories/${categoryId}`)
+            toast({
+                title: res.data, status: 'success', variant: 'top-accent', position: 'top-right', isClosable: true,
+            })
+            // navigate to categories page after 2 seconds
+            navigate('/qa-managers/categories', 2000);
         } catch (e) {
             if (e) {
-                console.log(e)
+                toast({
+                    title: e.response.data,
+                    status: 'error',
+                    variant: 'top-accent',
+                    position: 'top-right',
+                    isClosable: true,
+                })
             }
         }
     }
@@ -99,6 +110,7 @@ const CategoryDetail = () => {
     useEffect(() => {
         fetchCategory().then(r => console.log('get category success'));
     }, [categoryId])
+
     return (<>
         <Center>
             {(responseStatus == 404) ? 'Not found category' : (<>
@@ -146,7 +158,7 @@ const CategoryDetail = () => {
                     <ButtonGroup mt={5}>
                         <Button onClick={resetStateInput} colorScheme='twitter'>Clear input</Button>
                         <Button onClick={handleUpdateCategory} colorScheme='messenger'>Update</Button>
-                        <Button colorScheme={'red'}>Delete this category</Button>
+                        <Button onClick={handleDeleteCategory} colorScheme={'red'}>Delete this category</Button>
                     </ButtonGroup>
                 </Box>
             </>)}
