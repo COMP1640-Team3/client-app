@@ -25,6 +25,8 @@ import ChangePassword from "./Views/Profiles/Children/ChangePassword";
 import Categories from "./Views/QA-Manger/Category/Categories";
 import QaHome from "./Views/QA-Manger/Home";
 import CategoryDetail from "./Views/QA-Manger/Category/CategoryDetail";
+import CheckIsQaManager from "./components/Guards/CheckIsQaManager";
+import NewCategory from "./Views/QA-Manger/Category/NewCategory";
 
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
@@ -44,7 +46,6 @@ function App() {
     return (<div className="App">
         <>
             <Container maxW="container.xl">
-
                 {/* Navigation bar */}
                 <TopNav/>
 
@@ -69,9 +70,12 @@ function App() {
                     />
 
                     {/* Detail idea */}
-                    <Route path="ideas/:ideaId" element={<RequiredAuth>
-                        <IdeaDetail/>
-                    </RequiredAuth>}/>
+                    <Route
+                        path="ideas/:ideaId"
+                        element={<RequiredAuth>
+                            <IdeaDetail/>
+                        </RequiredAuth>}
+                    />
 
                     {/* Post new idea */}
                     <Route
@@ -89,24 +93,46 @@ function App() {
                     {/* Profile routes */}
                     <Route path="/my-account" element={<MyAccount/>}>
                         <Route index element={<ProfileDetail/>}/>
-                        <Route path='profiles' element={<ProfileDetail/>}/>
-                        <Route path='change-password' element={<ChangePassword/>}/>
+                        <Route path="profiles" element={<ProfileDetail/>}/>
+                        <Route path="change-password" element={<ChangePassword/>}/>
                     </Route>
 
                     {/* Qa manager routes*/}
-                    <Route path="/qa-managers" element={<QaHome/>}>
-                        <Route index element={<Categories/>}/>
-                        <Route path="categories" element={<Categories/>}/>
+                    <Route
+                        path="/qa-managers"
+                        element={<CheckIsQaManager>
+                            <QaHome/>
+                        </CheckIsQaManager>}
+                    >
+                        <Route index element={<CheckIsQaManager>
+                            <Categories/>
+                        </CheckIsQaManager>}/>
+
+                        <Route path="categories" element={<CheckIsQaManager>
+                            <Categories/>
+                        </CheckIsQaManager>}/>
+
+                        {/*New category*/}
+                        <Route path="categories/create" element={<CheckIsQaManager>
+                            <NewCategory/>
+                        </CheckIsQaManager>}/>
 
                         {/* Detail category*/}
-                        <Route path="categories/:categoryId" element={<CategoryDetail/>}/>
-
+                        <Route
+                            path="categories/:categoryId"
+                            element={<CheckIsQaManager>
+                                <CategoryDetail/>
+                            </CheckIsQaManager>}
+                        />
                     </Route>
 
                     {/* Admin routes */}
-                    <Route path="/admins" element={<CheckIsAdmin>
-                        <Dashboard/>
-                    </CheckIsAdmin>}>
+                    <Route
+                        path="/admins"
+                        element={<CheckIsAdmin>
+                            <Dashboard/>
+                        </CheckIsAdmin>}
+                    >
                         <Route index element={<CreateUser/>}/>
                         <Route path="users" element={<CreateUser/>}/>
                     </Route>
@@ -114,7 +140,6 @@ function App() {
                     {/* 404 */}
                     <Route path="*" element={<NoMatch/>}/>
                     <Route path="example" element={<Example/>}/>
-
                 </Routes>
             </Container>
         </>
