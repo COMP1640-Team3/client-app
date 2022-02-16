@@ -44,7 +44,7 @@ const Categories = () => {
                                     style={style}
                                     color={"whatsapp.600"}
                                 >
-                                    <Link to={`${category.id}`}>Modify</Link>
+                                    <Link to={`/qa-managers/categories/${category.id}`}>Modify</Link>
                                 </Td>
                             </Tr>
                         ))}

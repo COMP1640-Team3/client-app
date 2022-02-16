@@ -1,7 +1,8 @@
 import React, {useEffect} from "react";
 import "./App.css";
 import {Container} from "@chakra-ui/react";
-import {Routes, Route} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
+
 // Component
 import Login from "./Views/Auth/Login";
 import TopNav from "./components/Layout/TopNav";
@@ -117,14 +118,15 @@ function App() {
                             <NewCategory/>
                         </CheckIsQaManager>}/>
 
-                        {/* Detail category*/}
-                        <Route
-                            path="categories/:categoryId"
-                            element={<CheckIsQaManager>
-                                <CategoryDetail/>
-                            </CheckIsQaManager>}
-                        />
+
                     </Route>
+                    {/* Detail category*/}
+                    <Route
+                        path="/qa-managers/categories/:categoryId"
+                        element={<CheckIsQaManager>
+                            <CategoryDetail/>
+                        </CheckIsQaManager>}
+                    />
 
                     {/* Admin routes */}
                     <Route

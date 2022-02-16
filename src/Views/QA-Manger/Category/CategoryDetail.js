@@ -112,6 +112,7 @@ const CategoryDetail = () => {
                 title: res.data, status: 'success', variant: 'top-accent', position: 'top-right', isClosable: true,
             })
             // navigate to categories page after 2 seconds
+            onClose(); // close modal
             navigate('/qa-managers/categories', 2000);
         } catch (e) {
             if (e) {
@@ -123,6 +124,7 @@ const CategoryDetail = () => {
                     isClosable: true,
                 })
             }
+            onClose(); // close modal
         }
     }
 
