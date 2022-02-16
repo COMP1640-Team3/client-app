@@ -1,23 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Link, Outlet} from "react-router-dom";
 import Api from "../../../api/Api";
-import {
-    Table,
-    Thead,
-    Tbody,
-    Tfoot,
-    Tr,
-    Th,
-    Td,
-    TableCaption,
-} from "@chakra-ui/react";
+import {Table, Tbody, Td, Tfoot, Th, Thead, Tr,} from "@chakra-ui/react";
 
 const Categories = () => {
     const [categories, setCategories] = useState();
     const style = {
         cursor: "pointer",
     };
-    const featchCategories = async () => {
+    const fetchCategories = async () => {
         try {
             const res = await Api().get("/categories");
             //   console.log(res.data);
@@ -28,7 +19,7 @@ const Categories = () => {
     };
 
     useEffect(() => {
-        featchCategories();
+        fetchCategories();
     }, []);
     return (
         <>

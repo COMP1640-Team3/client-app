@@ -1,10 +1,29 @@
-import {Box, Button, ButtonGroup, Center, toast, useToast} from "@chakra-ui/react";
+import {
+    Box,
+    Button,
+    ButtonGroup,
+    Center,
+    FormControl,
+    FormHelperText,
+    FormLabel,
+    Heading,
+    Input,
+    Modal,
+    ModalBody,
+    ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    StackDivider,
+    useDisclosure,
+    useToast,
+    VStack
+} from "@chakra-ui/react";
+
 import {useNavigate, useParams} from "react-router-dom";
 import {useEffect, useState} from "react";
 import Api from "../../../api/Api";
-import {
-    Stack, HStack, VStack, StackDivider, FormControl, FormLabel, FormErrorMessage, FormHelperText, Input, Heading
-} from '@chakra-ui/react'
 
 // Init state
 const initInputState = {
@@ -18,7 +37,7 @@ const CategoryDetail = () => {
     const [responseStatus, setResponseStatus] = useState(0);
     const toast = useToast()
     const [error, setError] = useState({})
-
+    const {isOpen, onOpen, onClose} = useDisclosure()
     const navigate = useNavigate()
 
     const onChangeInput = (e) => {
@@ -108,7 +127,7 @@ const CategoryDetail = () => {
     }
 
     useEffect(() => {
-        fetchCategory().then(r => console.log('get category success'));
+        fetchCategory();
     }, [categoryId])
 
     return (<>
@@ -158,8 +177,28 @@ const CategoryDetail = () => {
                     <ButtonGroup mt={5}>
                         <Button onClick={resetStateInput} colorScheme='twitter'>Clear input</Button>
                         <Button onClick={handleUpdateCategory} colorScheme='messenger'>Update</Button>
-                        <Button onClick={handleDeleteCategory} colorScheme={'red'}>Delete this category</Button>
+                        <Button onClick={onOpen} colorScheme={'red'}>Delete this category</Button>
                     </ButtonGroup>
+
+
+                    <Modal isOpen={isOpen} onClose={onClose} isCentered>
+                        <ModalOverlay/>
+                        <ModalContent>
+                            <ModalHeader>Are your sure delete this category?</ModalHeader>
+                            <ModalCloseButton/>
+                            <ModalBody>
+                                Click yes if you want to delete!
+                            </ModalBody>
+
+                            <ModalFooter>
+                                <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                    Cancel
+                                </Button>
+                                <Button onClick={handleDeleteCategory} colorScheme='whatsapp'
+                                        variant='ghost'>Yes</Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
                 </Box>
             </>)}
         </Center>
