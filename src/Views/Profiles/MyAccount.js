@@ -6,7 +6,7 @@ const MyAccount = () => {
 
     return (<>
         <Center>
-            <HStack spacing='24px'>
+            <HStack spacing='24px' m={'5'}>
                 {/*Profile link page*/}
                 <Link to='profiles'>
                     <Button bg={'red.500'}>

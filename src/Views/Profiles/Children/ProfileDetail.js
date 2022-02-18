@@ -77,7 +77,7 @@ const ProfileDetail = () => {
 
     return (<>
         <Heading>Profile Detail</Heading>
-        <VStack boxShadow='inner' p='6' rounded='md' bg='gray.100'
+        <VStack boxShadow='inner' p='6' rounded='md' my={'5'} bg='gray.100'
             spacing={4}
             align='stretch'
         >
@@ -112,7 +112,7 @@ const ProfileDetail = () => {
 
         </VStack>
 
-        <Box my={10} boxShadow='outline' p='6' rounded='md'>
+        <Box my={'10'} boxShadow='outline' p='6' rounded='md'>
             <Heading>Change profile</Heading>
             <FormControl isRequired>
                 <FormLabel>NAME</FormLabel>

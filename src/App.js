@@ -28,6 +28,7 @@ import QaHome from "./Views/QA-Manger/Home";
 import CategoryDetail from "./Views/QA-Manger/Category/CategoryDetail";
 import CheckIsQaManager from "./components/Guards/CheckIsQaManager";
 import NewCategory from "./Views/QA-Manger/Category/NewCategory";
+import UserIdeas from "./Views/Ideas/Users/UserIdeas";
 
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
@@ -98,6 +99,9 @@ function App() {
                         <Route path="profiles" element={<ProfileDetail/>}/>
                         <Route path="change-password" element={<ChangePassword/>}/>
                     </Route>
+
+                    {/* User ideas */}
+                    <Route path='users/:userId/ideas' element={<UserIdeas/>}/>
 
                     {/* Qa manager routes*/}
                     <Route
