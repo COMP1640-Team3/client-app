@@ -22,7 +22,7 @@ const TopNav = () => {
             <Flex bg={'black'} p={'2'} color={'white'}>
                 Search
             </Flex>
-            <Flex p="6" mb={'5'} bg={'white'}>
+            <Flex align={'center'} p="6" mb={'5'} bg={'white'}>
                 <Box p="2">
                     <Heading size="md" color={'black'}>
                         <img width={'250'} height={'64'} src={require('../../images/logo_blue_550.png')}/>
@@ -31,13 +31,13 @@ const TopNav = () => {
                 <Spacer/>
                 <Box>
                     <NavLink style={navStyle} to="/">
-                        <Button colorScheme={'facebook'} mr="4">
+                        <Button colorScheme={'facebook'} variant={'ghost'} mr="4">
                             Home
                         </Button>
                     </NavLink>
 
                     <NavLink style={navStyle} to="/ideas">
-                        <Button colorScheme={'facebook'}>Ideas</Button>
+                        <Button colorScheme={'facebook'} variant={'ghost'}>Ideas</Button>
                     </NavLink>
 
                     <Menu>
@@ -45,6 +45,7 @@ const TopNav = () => {
                             transition="all 0.2s"
                             ml={4}
                             colorScheme={'facebook'}
+                            variant={'outline'}
                             as={Button}
                             rightIcon={<ChevronDownIcon/>}
                         >
@@ -81,6 +82,7 @@ const TopNav = () => {
                                 transition="all 0.2s"
                                 ml={4}
                                 colorScheme={'facebook'}
+                                variant={'outline'}
                                 as={Button}
                                 rightIcon={<ChevronDownIcon/>}
                             >
@@ -89,6 +91,9 @@ const TopNav = () => {
                             <MenuList textAlign={"left"}>
                                 <MenuItem>
                                     <Link to={"/my-account"}>My account</Link>
+                                </MenuItem>
+                                <MenuItem>
+                                    <Link to={"/users/ideas"}>My ideas</Link>
                                 </MenuItem>
                                 <MenuItem>
                                     {/* If user is authenticated show logout */}

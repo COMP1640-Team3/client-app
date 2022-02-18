@@ -101,7 +101,7 @@ function App() {
                     </Route>
 
                     {/* User ideas */}
-                    <Route path='users/:userId/ideas' element={<UserIdeas/>}/>
+                    <Route path='/users/ideas' element={<UserIdeas/>}/>
 
                     {/* Qa manager routes*/}
                     <Route

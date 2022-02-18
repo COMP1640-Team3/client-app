@@ -1,19 +1,21 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, useParams} from "react-router-dom";
 import {getDetailIdea, getTotalLike, ideaSelector, totalLikeOfIdeaSelector,} from "../../app/reducers/ideasSlice";
 // Chakra UI
-import {Box, Button, Heading, Text} from "@chakra-ui/react";
+import {Box, Button, Heading, HStack, Text} from "@chakra-ui/react";
 import Comments from "./Comments/Comments";
 import PostCommentForm from "../Comments/PostCommentForm";
 import LikeIdea from "../LikeIdea/LikeIdea";
-import login from "../../Views/Auth/Login";
+import Api from "../../api/Api";
+import UserEditIdeas from "../../Views/Ideas/Users/UserEditIdeas";
+import UserDeleteIdeas from "../../Views/Ideas/Users/UserDeleteIdeas";
 
 const IdeaDetail = () => {
     const {ideaId} = useParams();
     const dispatch = useDispatch();
     const navigate = useNavigate()
-
+    const [currentUser, setCurrentUser] = useState({})
     const idea = useSelector(ideaSelector);
     const totalLikeIdea = useSelector(totalLikeOfIdeaSelector);
 
@@ -21,20 +23,40 @@ const IdeaDetail = () => {
         window.open(`http://127.0.0.1:8000/api/ideas/${ideaId}/download`, '_blank').focus();
     }
 
+    const getUserId = async () => {
+        try {
+            const res = await Api().get('/user')
+            // console.log('userId fetch:', res.data)
+            setCurrentUser(res.data)
+        } catch (e) {
+            console.log('Error get user id', e)
+        }
+    }
+
+
     useEffect(() => {
+        getUserId();
         dispatch(getDetailIdea(ideaId)).unwrap().then().catch(e => navigate(-1));
         dispatch(getTotalLike(ideaId));
     }, [dispatch]);
 
-    return (<div>
+    return (<>
         <Heading as={"h1"} size={"xl"}>
             Title: {idea?.title}
         </Heading>
 
         {/* Button dowload file */}
-        <Button colorScheme={'blackAlpha'} onClick={handleDownloadPDFFile}>
-            Download idea as a pdf file
-        </Button>
+        <HStack>
+            <Button colorScheme={'blackAlpha'} onClick={handleDownloadPDFFile}>
+                Download idea as a pdf file
+            </Button>
+            {
+                idea?.user_id === currentUser?.id && (<>
+                    <UserEditIdeas ideaId={ideaId}/>
+                    <UserDeleteIdeas ideaId={ideaId}/>
+                </>)
+            }
+        </HStack>
 
         <Box
             mt={5}
@@ -64,7 +86,7 @@ const IdeaDetail = () => {
         <Box>
             <Comments ideaId={ideaId}/>
         </Box>
-    </div>);
+    </>);
 };
 
 export default IdeaDetail;
