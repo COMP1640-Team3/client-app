@@ -19,6 +19,9 @@ const TopNav = () => {
 
     return (
         <>
+            <Flex bg={'black'} p={'2'} color={'white'}>
+                Search
+            </Flex>
             <Flex p="6" mb={'5'} bg={'white'}>
                 <Box p="2">
                     <Heading size="md" color={'black'}>

@@ -10,8 +10,7 @@ const LikeIdea = ({ideaId}) => {
 
     const handleLikeIdea = async () => {
         try {
-            const res = await Api().post(`ideas/${ideaId}/likes`)
-            console.log(res.data)
+            await Api().post(`ideas/${ideaId}/likes`)
 
             // Get total like again
             dispatch(getTotalLike(ideaId));
@@ -37,7 +36,7 @@ const LikeIdea = ({ideaId}) => {
     const checkIdeaIsLiked = async () => {
         try {
             const res = await Api().get(`/ideas/${ideaId}/like/is-exist`);
-            console.log(res.data)
+            // console.log(res.data)
             setIsLiked(res.data.isExist)
         } catch (e) {
             console.log(e)
@@ -45,7 +44,7 @@ const LikeIdea = ({ideaId}) => {
     }
 
     useEffect(() => {
-        checkIdeaIsLiked();
+        checkIdeaIsLiked().then().catch();
     }, [])
 
     return (<>
