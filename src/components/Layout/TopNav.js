@@ -1,119 +1,103 @@
-import React, { useEffect, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-
-import {
-  Center,
-  Flex,
-  Box,
-  Spacer,
-  Button,
-  Heading,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
-  MenuDivider,
-  Text,
-} from "@chakra-ui/react";
-import { ChevronDownIcon, EmailIcon } from "@chakra-ui/icons";
+import React from "react";
+import {Link, NavLink} from "react-router-dom";
+import {Box, Button, Flex, Heading, Menu, MenuButton, MenuItem, MenuList, Spacer,} from "@chakra-ui/react";
+import {ChevronDownIcon} from "@chakra-ui/icons";
 import "../../css/layouts/topnav.css";
 import Logout from "../Logout";
-import { useSelector } from "react-redux";
-import { userInfoSelector } from "../../app/reducers/authSlice";
+import {useSelector} from "react-redux";
+import {userInfoSelector} from "../../app/reducers/authSlice";
 
 const TopNav = () => {
-  const navStyle = ({ isActive }) => {
-    return {
-      color: isActive ? "white" : "black",
-      fontWeight: isActive ? "bold" : "normal",
-      textDecoration: isActive ? "underline" : "none",
+    const navStyle = ({isActive}) => {
+        return {
+            fontWeight: isActive ? "bold" : "normal",
+            textDecoration: isActive ? "underline" : "none",
+        };
     };
-  };
 
-  const userInfo = useSelector(userInfoSelector);
+    const userInfo = useSelector(userInfoSelector);
 
-  return (
-    <>
-      <Flex m={"25"} boxShadow="base" p="6" rounded="md" bg="white">
-        <Box p="2">
-          <Heading size="md">My App</Heading>
-        </Box>
-        <Spacer />
-        <Box>
-          <NavLink style={navStyle} to="/">
-            <Button colorScheme="messenger" mr="4">
-              Home
-            </Button>
-          </NavLink>
+    return (
+        <>
+            <Flex p="6" mb={'5'} bg={'facebook.800'}>
+                <Box p="2">
+                    <Heading size="md" color={'white'}>
+                        <img width={'250'} height={'64'} src={require('../../images/logo_blue_550.png')}/>
+                    </Heading>
+                </Box>
+                <Spacer/>
+                <Box>
+                    <NavLink style={navStyle} to="/">
+                        <Button colorScheme={'whiteAlpha'} mr="4">
+                            Home
+                        </Button>
+                    </NavLink>
 
-          <NavLink style={navStyle} to="/ideas">
-            <Button colorScheme={"messenger"}>Ideas</Button>
-          </NavLink>
+                    <NavLink style={navStyle} to="/ideas">
+                        <Button colorScheme={'whiteAlpha'}>Ideas</Button>
+                    </NavLink>
 
-          <Menu>
-            <MenuButton
-              transition="all 0.2s"
-              ml={4}
-              colorScheme="blue"
-              as={Button}
-              rightIcon={<ChevronDownIcon />}
-            >
-              Actions
-            </MenuButton>
+                    <Menu>
+                        <MenuButton
+                            transition="all 0.2s"
+                            ml={4}
+                            colorScheme={'whiteAlpha'}
+                            as={Button}
+                            rightIcon={<ChevronDownIcon/>}
+                        >
+                            Actions
+                        </MenuButton>
 
-            {/*Admin action*/}
-            <MenuList>
-              {JSON.parse(localStorage.getItem("role")) === "super admin" && (
-                <>
-                  <MenuItem>
-                    <Link to="/admins">Go to DashBoard</Link>
-                  </MenuItem>
-                </>
-              )}
+                        {/*Admin action*/}
+                        <MenuList>
+                            {JSON.parse(localStorage.getItem("role")) === "super admin" && (
+                                <>
+                                    <MenuItem>
+                                        <Link to="/admins">Go to DashBoard</Link>
+                                    </MenuItem>
+                                </>
+                            )}
 
-              {/*qa manager action*/}
+                            {/*qa manager action*/}
 
-              {JSON.parse(localStorage.getItem("role")) ===
-                "quality assurance manager" && (
-                <>
-                  <MenuItem>
-                    <Link to="/qa-managers">QA manger homepage</Link>
-                  </MenuItem>
-                </>
-              )}
-            </MenuList>
-          </Menu>
+                            {JSON.parse(localStorage.getItem("role")) ===
+                                "quality assurance manager" && (
+                                    <>
+                                        <MenuItem>
+                                            <Link to="/qa-managers">QA manger homepage</Link>
+                                        </MenuItem>
+                                    </>
+                                )}
+                        </MenuList>
+                    </Menu>
 
-          {/* User authenticated */}
-          {localStorage.getItem("token") && (
-            <Menu>
-              <MenuButton
-                transition="all 0.2s"
-                ml={4}
-                colorScheme="blue"
-                as={Button}
-                rightIcon={<ChevronDownIcon />}
-              >
-                <i className="far fa-user-circle"> {userInfo.email}</i>
-              </MenuButton>
-              <MenuList textAlign={"left"}>
-                <MenuItem>
-                  <Link to={"/my-account"}>My account</Link>
-                </MenuItem>
-                <MenuItem>
-                  {/* If user is authenticated show logout */}
-                  <Logout />
-                </MenuItem>
-              </MenuList>
-            </Menu>
-          )}
-        </Box>
-      </Flex>
-    </>
-  );
+                    {/* User authenticated */}
+                    {localStorage.getItem("token") && (
+                        <Menu>
+                            <MenuButton
+                                transition="all 0.2s"
+                                ml={4}
+                                olorScheme={'whiteAlpha'}
+                                as={Button}
+                                rightIcon={<ChevronDownIcon/>}
+                            >
+                                <i className="far fa-user-circle"> {userInfo.email}</i>
+                            </MenuButton>
+                            <MenuList textAlign={"left"}>
+                                <MenuItem>
+                                    <Link to={"/my-account"}>My account</Link>
+                                </MenuItem>
+                                <MenuItem>
+                                    {/* If user is authenticated show logout */}
+                                    <Logout/>
+                                </MenuItem>
+                            </MenuList>
+                        </Menu>
+                    )}
+                </Box>
+            </Flex>
+        </>
+    );
 };
 
 export default TopNav;

@@ -41,7 +41,7 @@ const Ideas = () => {
 
       {/* List ideas */}
 
-      <Table variant="simple">
+      <Table variant="simple" boxShadow='lg' p='6' rounded='md' bg='white'>
         <TableCaption>Table of ideas</TableCaption>
         <Thead>
           <Tr>

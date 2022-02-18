@@ -46,9 +46,10 @@ function App() {
 
     return (<div className="App">
         <>
+            <TopNav/>
             <Container maxW="container.xl">
                 {/* Navigation bar */}
-                <TopNav/>
+
 
                 <Routes>
                     <Route path="/" element={<Home/>}/>
