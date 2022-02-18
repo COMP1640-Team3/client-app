@@ -1,6 +1,6 @@
 import React from "react";
 import {Link, NavLink} from "react-router-dom";
-import {Box, Button, Flex, Heading, Menu, MenuButton, MenuItem, MenuList, Spacer,} from "@chakra-ui/react";
+import {Box, Button, Flex, Heading, Menu, MenuButton, MenuItem, MenuList, Spacer, Text,} from "@chakra-ui/react";
 import {ChevronDownIcon} from "@chakra-ui/icons";
 import "../../css/layouts/topnav.css";
 import Logout from "../Logout";
@@ -19,29 +19,29 @@ const TopNav = () => {
 
     return (
         <>
-            <Flex p="6" mb={'5'} bg={'facebook.800'}>
+            <Flex p="6" mb={'5'} bg={'white'}>
                 <Box p="2">
-                    <Heading size="md" color={'white'}>
+                    <Heading size="md" color={'black'}>
                         <img width={'250'} height={'64'} src={require('../../images/logo_blue_550.png')}/>
                     </Heading>
                 </Box>
                 <Spacer/>
                 <Box>
                     <NavLink style={navStyle} to="/">
-                        <Button colorScheme={'whiteAlpha'} mr="4">
+                        <Button colorScheme={'facebook'} mr="4">
                             Home
                         </Button>
                     </NavLink>
 
                     <NavLink style={navStyle} to="/ideas">
-                        <Button colorScheme={'whiteAlpha'}>Ideas</Button>
+                        <Button colorScheme={'facebook'}>Ideas</Button>
                     </NavLink>
 
                     <Menu>
                         <MenuButton
                             transition="all 0.2s"
                             ml={4}
-                            colorScheme={'whiteAlpha'}
+                            colorScheme={'facebook'}
                             as={Button}
                             rightIcon={<ChevronDownIcon/>}
                         >
@@ -77,7 +77,7 @@ const TopNav = () => {
                             <MenuButton
                                 transition="all 0.2s"
                                 ml={4}
-                                olorScheme={'whiteAlpha'}
+                                colorScheme={'facebook'}
                                 as={Button}
                                 rightIcon={<ChevronDownIcon/>}
                             >
@@ -94,6 +94,11 @@ const TopNav = () => {
                             </MenuList>
                         </Menu>
                     )}
+                </Box>
+            </Flex>
+            <Flex bg={'facebook.600'} color={'white'}>
+                <Box w={'100%'}>
+                    <Text fontSize='2xl' align={'center'} fontFamily={'Source Code Pro'}>GREENWICH UNIVERSITY</Text>
                 </Box>
             </Flex>
         </>
