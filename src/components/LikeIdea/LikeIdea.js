@@ -23,7 +23,7 @@ const LikeIdea = ({ideaId}) => {
     const handleUnLikeIdea = async () => {
         try {
             const res = await Api().delete(`ideas/${ideaId}/likes`)
-            console.log(res.data)
+            // console.log(res.data)
 
             // Get total like again
             dispatch(getTotalLike(ideaId));

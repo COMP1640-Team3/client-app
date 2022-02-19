@@ -1,28 +1,25 @@
-import React, {useState, useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Api from "../../../api/Api";
 import {
+    Alert,
+    AlertIcon,
+    Box,
+    Button,
+    Checkbox,
+    CloseButton,
+    Flex,
     FormControl,
     FormLabel,
     Input,
-    Select,
-    Textarea,
-    Box,
-    Button,
-    Alert,
-    Text,
-    Checkbox,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-    CloseButton,
-    Flex,
     Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Select,
+    Text,
     useDisclosure
 } from "@chakra-ui/react";
 
@@ -119,8 +116,8 @@ const PostIdeaPDF = () => {
                 >
                     {categories.map((e) => {
                         return (<option key={e.id} value={e.id}>
-                                {e.name}
-                            </option>);
+                            {e.name}
+                        </option>);
                     })}
                 </Select>
             </FormControl>
@@ -129,15 +126,15 @@ const PostIdeaPDF = () => {
             </FormControl>
 
             {(isFilePicked && selectedFile) ? (<div>
-                    <p>Filename: {selectedFile.name}</p>
-                    <p>Filetype: {selectedFile.type}</p>
-                    <p>Size in bytes: {selectedFile.size}</p>
-                    <p>
-                        lastModifiedDate:{' '}
-                        {selectedFile.lastModifiedDate.toLocaleDateString()}
-                    </p>
-                    {/* <Button onClick={removeSelectedFile}>Remove file</Button> */}
-                </div>) : (<p>Select a file to show details</p>)}
+                <p>Filename: {selectedFile.name}</p>
+                <p>Filetype: {selectedFile.type}</p>
+                <p>Size in bytes: {selectedFile.size}</p>
+                <p>
+                    lastModifiedDate:{' '}
+                    {selectedFile.lastModifiedDate.toLocaleDateString()}
+                </p>
+                {/* <Button onClick={removeSelectedFile}>Remove file</Button> */}
+            </div>) : (<p>Select a file to show details</p>)}
             <FormControl mt='2'>
                 {isHiddenPost ? <Text color='red.500'>This post will hidden</Text> :
                     <Text color='green.500'>This post will visible</Text>}
@@ -180,33 +177,33 @@ const PostIdeaPDF = () => {
                 </ModalContent>
             </Modal>
             {resStatus === 201 && (<Alert variant="solid" mt="2" status="success">
-                    <AlertIcon/>
-                    Post idea success
-                    <CloseButton
-                        onClick={() => {
-                            setResStatus(null);
-                        }}
-                        position="absolute"
-                        right="8px"
-                        top="8px"
-                    />
-                </Alert>)}
+                <AlertIcon/>
+                Post idea success
+                <CloseButton
+                    onClick={() => {
+                        setResStatus(null);
+                    }}
+                    position="absolute"
+                    right="8px"
+                    top="8px"
+                />
+            </Alert>)}
             {resStatus === 422 && (<Alert mt="2" status="error">
-                    <AlertIcon/>
-                    <Flex direction='column' align='flex-start'>
-                        <Box>{error && error?.title}</Box>
-                        <Box>{error && error?.category_id}</Box>
-                        <Box>{error && error?.file}</Box>
-                    </Flex>
-                    <CloseButton
-                        onClick={() => {
-                            setResStatus(null);
-                        }}
-                        position="absolute"
-                        right="8px"
-                        top="8px"
-                    />
-                </Alert>)}
+                <AlertIcon/>
+                <Flex direction='column' align='flex-start'>
+                    <Box>{error && error?.title}</Box>
+                    <Box>{error && error?.category_id}</Box>
+                    <Box>{error && error?.file}</Box>
+                </Flex>
+                <CloseButton
+                    onClick={() => {
+                        setResStatus(null);
+                    }}
+                    position="absolute"
+                    right="8px"
+                    top="8px"
+                />
+            </Alert>)}
         </Box>
     </>);
 };
