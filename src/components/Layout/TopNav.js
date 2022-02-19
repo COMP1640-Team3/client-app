@@ -20,7 +20,6 @@ const TopNav = () => {
     return (
         <>
             <Flex bg={'black'} p={'2'} color={'white'}>
-                Search
             </Flex>
             <Flex align={'center'} p="6" mb={'5'} bg={'white'}>
                 <Box p="2">
