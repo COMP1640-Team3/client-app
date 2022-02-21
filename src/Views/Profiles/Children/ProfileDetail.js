@@ -19,17 +19,23 @@ import { PhoneIcon } from "@chakra-ui/icons";
 import Api from "../../../api/Api";
 
 const initState = {
-    userName: '', phone: '', address: '',
+    name: '', phone_number: '', address: '',
 }
 const ProfileDetail = () => {
     const toast = useToast()
     const profileUser = useSelector(profileSelector)
     const dispatch = useDispatch()
-    const [error, setError] = useState('');
+    const [error, setError] = useState({});
     const [gender, setGender] = useState('0')
-    const [{ userName, phone, address }, setState] = useState(initState)
+    const [{ name, phone_number, address }, setState] = useState(initState)
     const onChange = (event) => {
         const { name, value } = event.target
+        // Delete each error with input name
+        if (name) {
+            setError((prevState => ({
+                ...prevState, [name]: ''
+            })))
+        }
         setState((prevState) => ({ ...prevState, [name]: value }));
     }
     const clearState = () => {
@@ -39,8 +45,8 @@ const ProfileDetail = () => {
     const handleChangeProfile = async () => {
         try {
             let formData = {
-                name: userName,
-                phone_number: phone,
+                name ,
+                phone_number,
                 address,
                 gender
             }
@@ -54,12 +60,12 @@ const ProfileDetail = () => {
                 isClosable: true,
             })
             dispatch(getProfileDetail())
-            setError('')
+            setError([])
             setState({ ...initState })
         } catch (e) {
-            console.log(e)
+            console.log('error: ', e.response.data)
             if (e.response.status === 422) {
-                setError(e.response.data.errors);
+                setError(e.response.data);
                 toast({
                     title: 'Failed Update',
                     description: "Please try again input all field required!",
@@ -95,7 +101,7 @@ const ProfileDetail = () => {
                         Gender:{profileUser.profile.gender === 0 ? ' Male' : ' Female'}
                     </Box>
                     <Box>
-                        Phone: {profileUser.profile.phone_number}
+                        phone_number: {profileUser.profile.phone_number}
                     </Box>
                     <Box>
                         Address: {profileUser.profile.address}
@@ -113,25 +119,26 @@ const ProfileDetail = () => {
         </VStack>
 
         <Box my={'10'} boxShadow='outline' p='6' rounded='md'>
+            {error?.name}
             <Heading>Change profile</Heading>
             <FormControl isRequired>
                 <FormLabel>NAME</FormLabel>
-                <Input onChange={onChange} value={userName} placeholder='Eg: your name' id='name'
-                    name='userName' type='text' />
+                <Input onChange={onChange} value={name} placeholder='Eg: your name' id='name'
+                    name='name' type='text' />
                 <FormHelperText color={'red.500'} textAlign='left'>{error && error?.name}</FormHelperText>
             </FormControl>
 
             <FormControl isRequired>
-                <FormLabel>PHONE</FormLabel>
+                <FormLabel>Phone number</FormLabel>
                 <InputGroup>
                     <InputLeftElement
                         pointerEvents='none'
                         children={<PhoneIcon color='blue.300' />}
                     />
-                    <Input onChange={onChange} value={phone} type='tel' id='phone' name="phone"
+                    <Input onChange={onChange} value={phone_number} type='tel' id='phone_number' name="phone_number"
                         placeholder='Phone number' />
                 </InputGroup>
-                <FormHelperText color={'red.500'} textAlign='left'>{error && error?.phone_number}</FormHelperText>
+                <FormHelperText color={'red.500'} textAlign='left'>{error && error?.phone_number_number}</FormHelperText>
             </FormControl>
 
             <FormControl isRequired>

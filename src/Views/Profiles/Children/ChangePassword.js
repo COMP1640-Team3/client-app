@@ -28,6 +28,13 @@ const ChangePassword = () => {
 
     const onChange = (event) => {
         const { name, value } = event.target
+        // Delete each error with input name
+        if (name) {
+            setError((prevState => ({
+                ...prevState, [name]: ''
+            })))
+        }
+
         setState((prevState) => ({
             ...prevState,
             [name]: value
