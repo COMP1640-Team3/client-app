@@ -36,7 +36,7 @@ const Ideas = () => {
     }
 
     useEffect(() => {
-        getIdeas();
+        getIdeas()
     }, [query]);
 
     return (<>
@@ -54,11 +54,17 @@ const Ideas = () => {
         {/* List ideas */}
         <Stack mb='5'>
             <Box>
-                <Input onChange={changeTitle} placeholder='Enter title to search ideas' type='text'
-                       value={searchParams.get('title')}/>
+                <Input onChange={changeTitle} placeholder='Enter title to search ideas 💡' type='text'
+                       value={searchParams.get('title')}
+                />
             </Box>
         </Stack>
-        <Table variant="simple" boxShadow='lg' p='6' rounded='md' bg='white'>
+        <Table variant="simple" boxShadow='lg' p='6' rounded='md'
+               bgGradient={[
+                   'linear(to-tr, teal.300, yellow.400)',
+                   'linear(to-t, blue.200, teal.500)',
+                   'linear(to-b, orange.100, purple.300)',
+               ]}>
             <TableCaption>Table of ideas</TableCaption>
             <Thead>
                 <Tr>
@@ -70,7 +76,7 @@ const Ideas = () => {
                 </Tr>
             </Thead>
             <Tbody>
-                {ideas.data?.map((idea, index) => {
+                {ideas?.data?.map((idea, index) => {
                     return (<Tr key={index}>
                         <Td>{index}</Td>
                         <Td>{idea.title}</Td>
