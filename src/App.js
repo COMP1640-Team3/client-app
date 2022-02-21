@@ -30,6 +30,8 @@ import CheckIsQaManager from "./components/Guards/CheckIsQaManager";
 import NewCategory from "./Views/QA-Manger/Category/NewCategory";
 import UserIdeas from "./Views/Ideas/Users/UserIdeas";
 import CheckIsStaff from "./components/Guards/CheckIsStaff";
+import ListUsers from "./Views/Admin/User/ListUsers";
+import UserDetails from "./Views/Admin/User/UserDetails";
 
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
@@ -46,8 +48,9 @@ function App() {
         }
     }, [dispatch]);
 
-    return (<div className="App">
-        <>
+    return (<>
+        <div className="App">
+
             <TopNav/>
             <Container maxW="container.xl">
                 {/* Navigation bar */}
@@ -144,7 +147,9 @@ function App() {
                         </CheckIsAdmin>}
                     >
                         <Route index element={<CreateUser/>}/>
-                        <Route path="users" element={<CreateUser/>}/>
+                        <Route path="users/create" element={<CreateUser/>}/>
+                        <Route path="users" element={<ListUsers/>}/>
+                        <Route path='users/:userId' element={<UserDetails/>}/>
                     </Route>
 
                     {/* 404 */}
@@ -152,8 +157,8 @@ function App() {
                     <Route path="example" element={<Example/>}/>
                 </Routes>
             </Container>
-        </>
-    </div>);
+        </div>
+    </>);
 }
 
 export default App;
