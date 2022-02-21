@@ -10,7 +10,14 @@ const PostCommentForm = ({ideaId}) => {
     const toast = useToast()
     const handlePostComment = async () => {
         if (textComment === "") {
-            alert("Please input content comment");
+            toast({
+                title: 'Comment is not empty!',
+                description: "Please enter your comment again!",
+                position: 'top-right',
+                status: 'error',
+                duration: 9000,
+                isClosable: true,
+            })
         } else {
             try {
                 let formData = new FormData();

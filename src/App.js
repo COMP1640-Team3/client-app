@@ -29,6 +29,7 @@ import CategoryDetail from "./Views/QA-Manger/Category/CategoryDetail";
 import CheckIsQaManager from "./components/Guards/CheckIsQaManager";
 import NewCategory from "./Views/QA-Manger/Category/NewCategory";
 import UserIdeas from "./Views/Ideas/Users/UserIdeas";
+import CheckIsStaff from "./components/Guards/CheckIsStaff";
 
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
@@ -84,7 +85,9 @@ function App() {
                     <Route
                         path="post-idea"
                         element={<RequiredAuth>
-                            <PostIdeas/>
+                            <CheckIsStaff>
+                                <PostIdeas/>
+                            </CheckIsStaff>
                         </RequiredAuth>}
                     >
                         {/* Manual post idea is index child */}

@@ -42,9 +42,14 @@ const Ideas = () => {
     return (<>
         <div>Idea page</div>
 
-        <Link as={ReachLink} to="/post-idea" color="teal.500">
-            Post New Idea <AddIcon mx="2px"/>
-        </Link>
+        {
+            JSON.parse(localStorage.getItem('role')) === 'staff' &&
+            <Link as={ReachLink} to="/post-idea" color="teal.500">
+                Post New Idea <AddIcon mx="2px"/>
+            </Link>
+
+        }
+
 
         {/* List ideas */}
         <Stack mb='5'>
