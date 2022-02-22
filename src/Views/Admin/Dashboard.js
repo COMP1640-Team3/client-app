@@ -20,6 +20,21 @@ const Dashboard = () => {
                             List users
                         </Button>
                     </Link>
+                    <Link to='statistics/ideas-department'>
+                        <Button colorScheme={'teal'} size={'md'}>
+                            List ideas each department
+                        </Button>
+                    </Link>
+                    <Link to='statistics/users-department'>
+                        <Button colorScheme={'teal'} size={'md'}>
+                            List users each department
+                        </Button>
+                    </Link>
+                    <Link to='hidden-ideas'>
+                        <Button colorScheme={'teal'} size={'md'}>
+                            List hidden ideas
+                        </Button>
+                    </Link>
                 </Stack>
             </Center>
 
