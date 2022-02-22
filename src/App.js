@@ -32,6 +32,11 @@ import UserIdeas from "./Views/Ideas/Users/UserIdeas";
 import CheckIsStaff from "./components/Guards/CheckIsStaff";
 import ListUsers from "./Views/Admin/User/ListUsers";
 import UserDetails from "./Views/Admin/User/UserDetails";
+import IdeaDepartments from "./Views/Admin/Statistics/IdeaDepartments";
+import StatisticsHome from "./Views/Admin/Statistics/StatisticsHome";
+import UserDepartments from "./Views/Admin/Statistics/UserDepartments";
+import HiddenIdeas from "./Views/Admin/Ideas/HiddenIdeas";
+import HiddenIdeaDetails from "./Views/Admin/Ideas/HiddenIdeaDetails";
 
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
@@ -150,6 +155,14 @@ function App() {
                         <Route path="users/create" element={<CreateUser/>}/>
                         <Route path="users" element={<ListUsers/>}/>
                         <Route path='users/:userId' element={<UserDetails/>}/>
+
+                        {/*Ideas*/}
+                        <Route path='hidden-ideas' element={<HiddenIdeas/>}/>
+                        <Route path='hidden-ideas/:ideaId' element={<HiddenIdeaDetails/>}/>
+                        {/*  Statictis  */}
+                        <Route path='statistics' element={<StatisticsHome/>}/>
+                        <Route path='statistics/ideas-department' element={<IdeaDepartments/>}/>
+                        <Route path='statistics/users-department' element={<UserDepartments/>}/>
                     </Route>
 
                     {/* 404 */}
