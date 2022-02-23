@@ -39,22 +39,22 @@ const ListUsers = () => {
     useEffect(() => {
         fetchUsers().then()
         fetchRoles().then()
-        setSearchParams({'role-name': 'staff'})
-    }, [])
+    }, [roleId])
 
     return (<>
         <FormControl my={'5px'}>
             <FormLabel>Choose role name</FormLabel>
             <Select onChange={changeRoleId} value={roleId} size={'md'}>
                 {roles && roles.map((e) => {
-                    return (<option key={e.id}  value={e.id}>
+                    return (<option key={e.id} value={e.id}>
                         {e.name}
                     </option>);
                 })}
             </Select>
         </FormControl>
 
-        <Table variant="simple" boxShadow='base' p='6' rounded='md' bgGradient='linear(red.100 0%, orange.100 25%, yellow.100 50%)'>
+        <Table variant="simple" boxShadow='base' p='6' rounded='md'
+               bgGradient='linear(red.100 0%, orange.100 25%, yellow.100 50%)'>
             <TableCaption color='facebook.600'>Table of users in system</TableCaption>
             <Thead>
                 <Tr>
