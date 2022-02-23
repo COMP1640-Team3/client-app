@@ -35,6 +35,12 @@ const Dashboard = () => {
                             List hidden ideas
                         </Button>
                     </Link>
+
+                    <Link to='ideas-without-comments'>
+                        <Button colorScheme={'teal'} size={'md'}>
+                            List ideas without comments
+                        </Button>
+                    </Link>
                 </Stack>
             </Center>
 

@@ -37,7 +37,7 @@ import StatisticsHome from "./Views/Admin/Statistics/StatisticsHome";
 import UserDepartments from "./Views/Admin/Statistics/UserDepartments";
 import HiddenIdeas from "./Views/Admin/Ideas/HiddenIdeas";
 import HiddenIdeaDetails from "./Views/Admin/Ideas/HiddenIdeaDetails";
-
+import IdeaWithoutComments from "./Views/Admin/Ideas/IdeaWithoutComments";
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
 
@@ -159,7 +159,9 @@ function App() {
                         {/*Ideas*/}
                         <Route path='hidden-ideas' element={<HiddenIdeas/>}/>
                         <Route path='hidden-ideas/:ideaId' element={<HiddenIdeaDetails/>}/>
-                        {/*  Statictis  */}
+                        <Route path='ideas-without-comments' element={<IdeaWithoutComments/>}/>
+
+                        {/*  Statistic  */}
                         <Route path='statistics' element={<StatisticsHome/>}/>
                         <Route path='statistics/ideas-department' element={<IdeaDepartments/>}/>
                         <Route path='statistics/users-department' element={<UserDepartments/>}/>
