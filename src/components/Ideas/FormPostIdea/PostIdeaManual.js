@@ -1,27 +1,27 @@
 import React, {useEffect, useState} from "react";
 import {
+    Alert,
+    AlertIcon,
+    Box,
+    Button,
+    Checkbox,
+    CloseButton,
+    Flex,
     FormControl,
     FormLabel,
     Input,
-    Text,
-    Select,
-    Textarea,
-    Box,
-    Button,
-    Alert,
-    AlertIcon,
-    AlertTitle,
-    AlertDescription,
-    CloseButton,
     Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
-    useDisclosure,
-    Checkbox, Flex
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    ModalOverlay,
+    Select,
+    Text,
+    Textarea,
+    toast,
+    useDisclosure, useToast
 } from "@chakra-ui/react";
 
 import Api from "../../../api/Api";
@@ -34,7 +34,7 @@ const PostIdeaManual = () => {
     const [isHiddenPost, setIsHiddenPost] = useState(false);
     const [resStatus, setResStatus] = useState(0);
     const [error, setError] = useState({});
-
+    const toast = useToast()
     const {isOpen, onOpen, onClose} = useDisclosure();
 
     const handleFetchCategories = async () => {
@@ -66,7 +66,14 @@ const PostIdeaManual = () => {
                 setResStatus(422);
                 setError(error.response.data)
             } else if (error.response.status === 403) {
-                alert('You are not allowed!')
+                toast({
+                    title: "You don't have permission to post new idea",
+                    position: "top-right",
+                    description: "Please contract your QA coordinator of your department",
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
             }
             onClose()
         }

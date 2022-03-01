@@ -1,32 +1,53 @@
 import {useEffect, useState} from "react";
 import {Box, Button, ButtonGroup, Flex, Image, Select, Spacer, Text, VStack} from "@chakra-ui/react";
 import Api from "../../../api/Api";
-import {useParams} from "react-router-dom";
-import ChoosePermissions from "../../../components/Permissions/ChoosePermissions";
+import {useNavigate, useParams} from "react-router-dom";
 
 const StaffDetail = () => {
     // State
     const [user, setUser] = useState({})
     const [userPermissions, setUserPermissions] = useState([]);// current staff permission
     const [permissions, setPermissions] = useState([])
-    const {staffId} = useParams();
+    const {staffId} = useParams()
+    const navigate = useNavigate()
+    const [listPermissionId, setListPermissionId] = useState([])
+
+    // methods
+    const changeListPermission = (e) => {
+        // console.log(e.target)
+        let value = Array.from(e.target.selectedOptions, option => option.value);
+        setListPermissionId([...value])
+        console.log(listPermissionId)
+    }
 
     // Fetch staff detail
     const fetchStaff = async () => {
         try {
             const response = await Api().get(`/qa-coordinators/staffs/${staffId}`)
-            console.log(response.data)
-            setPermissions(response.data.permissions);
+            setPermissions(response.data.permissions); // all permission of role staff
             setUser(response.data.staff)
-            setUserPermissions(response.data.staff.permissions)
+            setUserPermissions(response.data.staff.permissions) //current permission of this staff
         } catch (error) {
             console.log(error.response.data)
+            if (error.response.status === 404) {
+                navigate(-1)
+            }
         }
     }
 
+    const handleUpdatePermissions = async () => {
+        try {
+            const res = await Api().put(`/qa-coordinators/staffs/${staffId}/permissions`, {permissions: listPermissionId});
+            await fetchStaff()
+            console.log(res)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     useEffect(() => {
         fetchStaff().then()
-    }, [])
+    }, []);
+
 
     return (<>
         <Flex boxShadow='inner' p='6' rounded='md' bg='facebook.500' color={'white'} my={'20px'} w={'35%'}>
@@ -72,7 +93,16 @@ const StaffDetail = () => {
             </VStack>
         </Flex>
         <Flex mt={2}>
-            <ChoosePermissions permissions={permissions}/>
+            <VStack>
+                <Text>Choose permissions</Text>
+                <Select onChange={changeListPermission} multiple height={'100px'} width={'200px'}>
+                    {
+                        permissions && permissions.map(e => <option key={e.id} value={e.id}>{e.name}</option>)
+                    }
+                </Select>
+                {/*<Spacer/>*/}
+                <Button onClick={handleUpdatePermissions}>Update permission</Button>
+            </VStack>
         </Flex>
     </>)
 }

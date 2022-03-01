@@ -22,6 +22,7 @@ import {
     Text,
     useDisclosure
 } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react'
 
 
 const PostIdeaPDF = () => {
@@ -35,6 +36,7 @@ const PostIdeaPDF = () => {
     const [resStatus, setResStatus] = useState(0);
     const [error, setError] = useState({});
     const {isOpen, onOpen, onClose} = useDisclosure();
+    const toast = useToast()
 
     const changeHandler = (event) => {
         setSelectedFile(event.target.files[0]);
@@ -73,7 +75,14 @@ const PostIdeaPDF = () => {
                 setError(error.response.data);
                 setResStatus(422);
             } else if (error.response.status === 403) {
-                alert('You are not allowed!')
+                toast({
+                    title: "You don't have permission to post new idea",
+                    position:"top-right",
+                    description: "Please contract your QA coordinator of your department",
+                    status: 'error',
+                    duration: 9000,
+                    isClosable: true,
+                })
             }
             onClose() // close modal
         }
@@ -131,7 +140,7 @@ const PostIdeaPDF = () => {
                 <p>Size in bytes: {selectedFile.size}</p>
                 <p>
                     lastModifiedDate:{' '}
-                    {selectedFile.lastModifiedDate.toLocaleDateString()}
+                    {selectedFile?.lastModifiedDate?.toLocaleDateString()}
                 </p>
                 {/* <Button onClick={removeSelectedFile}>Remove file</Button> */}
             </div>) : (<p>Select a file to show details</p>)}
