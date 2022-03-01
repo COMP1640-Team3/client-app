@@ -71,6 +71,15 @@ const TopNav = () => {
                                         </MenuItem>
                                     </>
                                 )}
+                            {/* qa coordinator action*/}
+                            {JSON.parse(localStorage.getItem("role")) ===
+                                "QA coordinator" && (
+                                    <>
+                                        <MenuItem>
+                                            <Link to="/qa-coordinator">QA coordinator homepage</Link>
+                                        </MenuItem>
+                                    </>
+                                )}
                         </MenuList>
                     </Menu>
 

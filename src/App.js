@@ -38,6 +38,10 @@ import UserDepartments from "./Views/Admin/Statistics/UserDepartments";
 import HiddenIdeas from "./Views/Admin/Ideas/HiddenIdeas";
 import HiddenIdeaDetails from "./Views/Admin/Ideas/HiddenIdeaDetails";
 import IdeaWithoutComments from "./Views/Admin/Ideas/IdeaWithoutComments";
+import QaCoordinator from "./Views/QACoordinator/QaCoordinator";
+import CheckIsQaCoordinator from "./components/Guards/CheckIsQaCoordinator";
+import ListStaffs from "./Views/QACoordinator/Staffs/ListStaffs";
+import StaffDetail from "./Views/QACoordinator/Staffs/StaffDetail";
 // Lazy route
 const Ideas = React.lazy(() => import("./Views/Ideas/Ideas"));
 
@@ -143,6 +147,15 @@ function App() {
                             <CategoryDetail/>
                         </CheckIsQaManager>}
                     />
+                    {/* QA Coordinator*/}
+                    <Route path="/qa-coordinator" element={
+                        <CheckIsQaCoordinator>
+                            <QaCoordinator/>
+                        </CheckIsQaCoordinator>
+                    }>
+                        <Route path={'staffs'} element={<ListStaffs/>}/>
+                        <Route path={'staffs/:staffId'} element={<StaffDetail />}/>
+                    </Route>
 
                     {/* Admin routes */}
                     <Route

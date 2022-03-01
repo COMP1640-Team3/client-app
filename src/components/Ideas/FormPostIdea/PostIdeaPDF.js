@@ -32,7 +32,7 @@ const PostIdeaPDF = () => {
     const [selectedFile, setSelectedFile] = useState({});
     const [isFilePicked, setIsFilePicked] = useState(false);
     const [isHiddenPost, setIsHiddenPost] = useState(false);
-    const [resStatus, setResStatus] = useState(null);
+    const [resStatus, setResStatus] = useState(0);
     const [error, setError] = useState({});
     const {isOpen, onOpen, onClose} = useDisclosure();
 
@@ -70,7 +70,7 @@ const PostIdeaPDF = () => {
         } catch (error) {
             if (error.response.status === 422) {
                 console.log(error.response);
-                setError(error.response.data.errors);
+                setError(error.response.data);
                 setResStatus(422);
             } else if (error.response.status === 403) {
                 alert('You are not allowed!')
@@ -197,7 +197,7 @@ const PostIdeaPDF = () => {
                 </Flex>
                 <CloseButton
                     onClick={() => {
-                        setResStatus(null);
+                        setResStatus(0);
                     }}
                     position="absolute"
                     right="8px"

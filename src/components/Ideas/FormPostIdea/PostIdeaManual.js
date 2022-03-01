@@ -32,8 +32,8 @@ const PostIdeaManual = () => {
     const [content, setContent] = useState("");
     const [categories, setCategories] = useState([]);
     const [isHiddenPost, setIsHiddenPost] = useState(false);
-    const [resStatus, setResStatus] = useState(null);
-    const [error, setError] = useState('');
+    const [resStatus, setResStatus] = useState(0);
+    const [error, setError] = useState({});
 
     const {isOpen, onOpen, onClose} = useDisclosure();
 
@@ -64,6 +64,7 @@ const PostIdeaManual = () => {
 
             if (error.response.status === 422) {
                 setResStatus(422);
+                setError(error.response.data)
             } else if (error.response.status === 403) {
                 alert('You are not allowed!')
             }
@@ -169,7 +170,7 @@ const PostIdeaManual = () => {
             </Flex>
             <CloseButton
                 onClick={() => {
-                    setResStatus(null);
+                    setResStatus(0);
                 }}
                 position="absolute"
                 right="8px"
