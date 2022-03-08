@@ -100,9 +100,16 @@ const TopNav = () => {
                                 <MenuItem>
                                     <Link to={"/my-account"}>My account</Link>
                                 </MenuItem>
-                                <MenuItem>
-                                    <Link to={"/users/ideas"}>My ideas</Link>
-                                </MenuItem>
+                                {
+                                    (JSON.parse(localStorage.getItem('role')) === 'staff') && (
+                                        <>
+                                            <MenuItem>
+                                                <Link to={"/users/ideas"}>My ideas</Link>
+                                            </MenuItem>
+                                        </>
+                                    )
+                                }
+
                                 <MenuItem>
                                     {/* If user is authenticated show logout */}
                                     <Logout/>

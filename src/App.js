@@ -116,7 +116,9 @@ function App() {
                     </Route>
 
                     {/* User ideas */}
-                    <Route path='/users/ideas' element={<UserIdeas/>}/>
+                    <Route path='/users/ideas' element={<CheckIsStaff>
+                        <UserIdeas/>
+                    </CheckIsStaff>}/>
 
                     {/* Qa manager routes*/}
                     <Route
@@ -148,13 +150,11 @@ function App() {
                         </CheckIsQaManager>}
                     />
                     {/* QA Coordinator*/}
-                    <Route path="/qa-coordinator" element={
-                        <CheckIsQaCoordinator>
-                            <QaCoordinator/>
-                        </CheckIsQaCoordinator>
-                    }>
+                    <Route path="/qa-coordinator" element={<CheckIsQaCoordinator>
+                        <QaCoordinator/>
+                    </CheckIsQaCoordinator>}>
                         <Route path={'staffs'} element={<ListStaffs/>}/>
-                        <Route path={'staffs/:staffId'} element={<StaffDetail />}/>
+                        <Route path={'staffs/:staffId'} element={<StaffDetail/>}/>
                     </Route>
 
                     {/* Admin routes */}
