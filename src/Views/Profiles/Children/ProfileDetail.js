@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from "react-redux";
-import { getProfileDetail, profileSelector } from "../../../app/reducers/profileSlice";
+import React, {useEffect, useState} from 'react'
+import {useDispatch, useSelector} from "react-redux";
+import {getProfileDetail, profileSelector} from "../../../app/reducers/profileSlice";
 import {
-    Box, Button,
+    Box,
+    Button,
     FormControl,
+    FormHelperText,
     FormLabel,
     Heading,
     HStack,
@@ -12,10 +14,10 @@ import {
     InputLeftElement,
     Radio,
     RadioGroup,
-    VStack,
-    useToast, FormHelperText
+    useToast,
+    VStack
 } from '@chakra-ui/react'
-import { PhoneIcon } from "@chakra-ui/icons";
+import {PhoneIcon} from "@chakra-ui/icons";
 import Api from "../../../api/Api";
 
 const initState = {

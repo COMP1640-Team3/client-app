@@ -45,7 +45,7 @@ const IdeaDetail = () => {
             Title: {idea?.title}
         </Heading>
 
-        {/* Button dowload file */}
+        {/* Button download file */}
         <HStack>
             <Button colorScheme={'blackAlpha'} onClick={handleDownloadPDFFile}>
                 Download idea as a pdf file
@@ -78,13 +78,13 @@ const IdeaDetail = () => {
         </Box>
 
         {/*Like idea button*/}
-        <LikeIdea ideaId={ideaId}/>
+        <LikeIdea ideaId={ideaId} />
         {/* form post comment  */}
         <PostCommentForm ideaId={ideaId}/>
 
         {/* Comments */}
         <Box>
-            <Comments ideaId={ideaId}/>
+            <Comments ideaId={ideaId} currentUser={currentUser}/>
         </Box>
     </>);
 };
