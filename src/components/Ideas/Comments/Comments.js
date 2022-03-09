@@ -1,31 +1,27 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { OrderedList } from "@chakra-ui/react";
-import {
-  commentIdeaSelector,
-  getCommentOfIdea,
-} from "../../../app/reducers/ideasSlice";
+import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {VStack} from "@chakra-ui/react";
+import {commentIdeaSelector, getCommentOfIdea,} from "../../../app/reducers/ideasSlice";
 import Comment from "./Comment";
 
-const Comments = ({ ideaId }) => {
-  // const [comments, setComments] = useState();
-  const comments = useSelector(commentIdeaSelector);
-  const dispatch = useDispatch();
+const Comments = ({ideaId, currentUser}) => {
+    const comments = useSelector(commentIdeaSelector);
+    const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(getCommentOfIdea(ideaId));
-  }, [dispatch, ideaId]);
+    useEffect(() => {
+        dispatch(getCommentOfIdea(ideaId));
+    }, [dispatch, ideaId]);
 
-  return (
-    <>
-      List Comment
-      <OrderedList>
-        {comments.map((comment, index) => (
-          <Comment comment={comment} key={index} />
-        ))}
-      </OrderedList>
-    </>
-  );
+    return (
+        <>
+            List Comment
+            <VStack>
+                {comments.map((comment, index) => (
+                    <Comment ideaId={ideaId} comment={comment} currentUser={currentUser} key={index}/>
+                ))}
+            </VStack>
+        </>
+    );
 };
 
 export default Comments;
