@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import Api from "../../../api/Api";
-import {Center, Table, TableCaption, Tbody, Td, Text, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
+import {Center, Link, Table, TableCaption, Tbody, Td, Text, Tfoot, Th, Thead, Tr} from "@chakra-ui/react";
 import Pagination from "react-js-pagination";
+import {Link as ReachLink} from "react-router-dom";
 
 const IdeaWithoutComments = () => {
     const [ideas, setIdeas] = useState({})
@@ -30,6 +31,7 @@ const IdeaWithoutComments = () => {
                         <Th isNumeric>No.</Th>
                         <Th>Title</Th>
                         <Th>Content</Th>
+                        <Th>Detail</Th>
                     </Tr>
                 </Thead>
                 <Tbody>
@@ -38,6 +40,11 @@ const IdeaWithoutComments = () => {
                             <Td isNumeric>{index}</Td>
                             <Td>{idea.title}</Td>
                             <Td><Text noOfLines={[1, 2, 3]}>{idea.content}</Text></Td>
+                            <Td>
+                                <Link as={ReachLink} to={`${idea.id}`}>
+                                    View Detail
+                                </Link>
+                            </Td>
                         </Tr>);
                     })}
                 </Tbody>

@@ -1,6 +1,6 @@
 import React from "react"
-import {Outlet, Link} from "react-router-dom"
-import {Stack, HStack, VStack, Box, Button, Center} from '@chakra-ui/react'
+import {Link, Outlet} from "react-router-dom"
+import {Button, Center, HStack} from '@chakra-ui/react'
 
 const MyAccount = () => {
 
@@ -17,7 +17,7 @@ const MyAccount = () => {
                 {/*Change password page*/}
                 <Link to='change-password'>
                     <Button bg='tomato'>
-                    Change password
+                        Change password
                     </Button>
                 </Link>
             </HStack>

@@ -75,6 +75,7 @@ const CategoryDetail = () => {
                     toast({
                         title: `Category not found`, position: 'top-right', isClosable: true,
                     })
+                    navigate(-1);
                 }
             }
         }
@@ -101,7 +102,6 @@ const CategoryDetail = () => {
                 if (e.response.status === 422) {
                     setError(e.response.data)
                 }
-                // console.log('error update category: ', e)
             }
         }
     }
@@ -111,7 +111,7 @@ const CategoryDetail = () => {
             toast({
                 title: res.data, status: 'success', variant: 'top-accent', position: 'top-right', isClosable: true,
             })
-            // navigate to categories page after 2 seconds
+            // navigate to category page after 2 seconds
             onClose(); // close modal
             navigate('/qa-managers/categories', 2000);
         } catch (e) {
@@ -134,7 +134,7 @@ const CategoryDetail = () => {
 
     return (<>
         <Center>
-            {(responseStatus == 404) ? 'Not found category' : (<>
+            {(responseStatus === 404) ? 'Not found category' : (<>
                 <VStack
                     boxShadow='inner' m={5} p='6' rounded='md' bg='gray.100'
                     divider={<StackDivider borderColor='gray.200'/>}

@@ -74,6 +74,9 @@ const NewCategory = () => {
                     isClosable: true,
                 })
             }
+            if (e.response.status === 422) {
+                setError(e.response.data)
+            }
         }
     }
 

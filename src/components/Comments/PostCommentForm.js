@@ -15,7 +15,7 @@ const PostCommentForm = ({ideaId}) => {
                 description: "Please enter your comment again!",
                 position: 'top-right',
                 status: 'error',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
         } else {
@@ -27,7 +27,7 @@ const PostCommentForm = ({ideaId}) => {
                 toast({
                     status: 'success',
                     title: 'Post comment success',
-                    duration: 9000,
+                    duration: 3000,
                     position: 'top-right',
                     isClosable: true,
                 })
