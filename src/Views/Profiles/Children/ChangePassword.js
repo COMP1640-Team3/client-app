@@ -1,25 +1,26 @@
-import React, { useState } from "react"
+import React, {useState} from "react"
 import {
-    Box, Button,
+    Box,
+    Button,
     FormControl,
+    FormHelperText,
     FormLabel,
     Heading,
-    HStack,
     Input,
     InputGroup,
-    useToast, FormHelperText,
     InputRightElement,
+    useToast,
 } from '@chakra-ui/react'
 import Api from "../../../api/Api"
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { deleteAuth } from "../../../app/reducers/authSlice";
+import {useNavigate} from "react-router-dom";
+import {useDispatch} from "react-redux";
+import {deleteAuth} from "../../../app/reducers/authSlice";
 
 // Init state
-const initState = { currentPassword: '', password: '', passwordConfirmation: '' }
+const initState = {currentPassword: '', password: '', passwordConfirmation: ''}
 
 const ChangePassword = () => {
-    const [{ currentPassword, password, passwordConfirmation }, setState] = useState(initState)
+    const [{currentPassword, password, passwordConfirmation}, setState] = useState(initState)
     const [show, setShow] = useState(false)
     const [error, setError] = useState({})
     const toast = useToast()
@@ -27,7 +28,7 @@ const ChangePassword = () => {
     const dispatch = useDispatch()
 
     const onChange = (event) => {
-        const { name, value } = event.target
+        const {name, value} = event.target
         // Delete each error with input name
         if (name) {
             setError((prevState => ({
@@ -43,13 +44,13 @@ const ChangePassword = () => {
 
     // Reset all state
     const clearState = () => {
-        setState({ ...initState })
+        setState({...initState})
     }
     // Show password
     const handleClick = () => setShow(!show) // show password or not
     /**
      * Check new password is same the current password
-     * 
+     *
      * @return bool -- true if their same value, otherwise false
      */
     const checkIsSameNewPassword = () => {
@@ -57,7 +58,7 @@ const ChangePassword = () => {
             toast({
                 title: 'The new password can not same the current password',
                 status: 'warning',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
             return true
@@ -67,7 +68,7 @@ const ChangePassword = () => {
 
     /**
      * Handle change password
-     * 
+     *
      * @return JSON
      */
     const handleChangePassword = async () => {
@@ -78,11 +79,11 @@ const ChangePassword = () => {
                     password,
                     password_confirmation: passwordConfirmation
                 }
-                const response = await Api().put('/users/passwords', formData)
+                await Api().put('/users/passwords', formData)
                 // alert('Change password success')
                 toast({
                     title: 'Change password success',
-                    description: "Brower will logout after 3 seconds",
+                    description: "Browser will logout after 5 seconds",
                     status: 'success',
                     duration: 3000,
                     isClosable: true,
@@ -94,13 +95,13 @@ const ChangePassword = () => {
             } catch (error) {
                 if (error) {
                     if (error.response.status === 422) {
-                        setError({ ...error.response.data })
+                        setError({...error.response.data})
                     } else if (error.response.status === 403) {
                         toast({
                             title: error.response.data,
                             description: "Please try again!",
                             status: 'error',
-                            duration: 9000,
+                            duration: 3000,
                             isClosable: true,
                         })
                     }
@@ -115,7 +116,7 @@ const ChangePassword = () => {
             localStorage.removeItem("token");
             localStorage.removeItem("role")
             dispatch(deleteAuth())
-            navigate('/', { replace: true })
+            navigate('/', {replace: true})
         } catch (error) {
         }
     };
@@ -143,7 +144,8 @@ const ChangePassword = () => {
                             </Button>
                         </InputRightElement>
                     </InputGroup>
-                    <FormHelperText color={'red.500'} textAlign='left'>{error && error?.current_password}</FormHelperText>
+                    <FormHelperText color={'red.500'}
+                                    textAlign='left'>{error && error?.current_password}</FormHelperText>
                 </FormControl>
 
                 {/* New password */}
@@ -167,7 +169,7 @@ const ChangePassword = () => {
                     <FormHelperText color={'red.500'} textAlign='left'>{error && error?.password}</FormHelperText>
                 </FormControl>
 
-                {/* New password comfirmation */}
+                {/* New password confirmation */}
                 <FormControl w='90%'>
                     <FormLabel htmlFor='password'>Password confirmation</FormLabel>
                     <InputGroup size='md'>

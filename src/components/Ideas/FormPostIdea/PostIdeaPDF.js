@@ -80,7 +80,7 @@ const PostIdeaPDF = () => {
                     position:"top-right",
                     description: "Please contract your QA coordinator of your department",
                     status: 'error',
-                    duration: 9000,
+                    duration: 3000,
                     isClosable: true,
                 })
             }

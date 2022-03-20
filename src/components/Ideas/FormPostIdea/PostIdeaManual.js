@@ -20,8 +20,8 @@ import {
     Select,
     Text,
     Textarea,
-    toast,
-    useDisclosure, useToast
+    useDisclosure,
+    useToast
 } from "@chakra-ui/react";
 
 import Api from "../../../api/Api";
@@ -61,7 +61,7 @@ const PostIdeaManual = () => {
             setResStatus(201);
             onClose()
         } catch (error) {
-
+            console.log(error)
             if (error.response.status === 422) {
                 setResStatus(422);
                 setError(error.response.data)
@@ -71,7 +71,7 @@ const PostIdeaManual = () => {
                     position: "top-right",
                     description: "Please contract your QA coordinator of your department",
                     status: 'error',
-                    duration: 9000,
+                    duration: 3000,
                     isClosable: true,
                 })
             }

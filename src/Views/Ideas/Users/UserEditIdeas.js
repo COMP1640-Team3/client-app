@@ -75,7 +75,7 @@ const UserEditIdeas = ({ideaId}) => {
                 title: 'Update idea success.',
                 description: "OK",
                 status: 'success',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
             // Then close modal
@@ -86,7 +86,7 @@ const UserEditIdeas = ({ideaId}) => {
                     title: 'Update idea failed.',
                     description: "Please try again!",
                     status: 'error',
-                    duration: 9000,
+                    duration: 3000,
                     isClosable: true,
                 })
                 if (e.response.status === 422) {

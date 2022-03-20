@@ -5,7 +5,6 @@ const BaseApi = axios.create({
 });
 
 BaseApi.defaults.headers.post["Content-Type"] = "application/json";
-BaseApi.defaults.headers.common["Access-Control-Allow-Origin"] = "*";
 
 const Api = () => {
     const token = localStorage.getItem("token");

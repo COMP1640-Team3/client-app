@@ -78,7 +78,7 @@ const CreateUser = () => {
                 title: 'Account created.',
                 description: "We've created your account for you.",
                 status: 'success',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
         } catch (e) {
@@ -89,7 +89,7 @@ const CreateUser = () => {
                     title: 'Failed for create new user',
                     description: "Please try again!",
                     status: 'error',
-                    duration: 9000,
+                    duration: 3000,
                     isClosable: true,
                 })
             }

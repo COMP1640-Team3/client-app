@@ -11,10 +11,9 @@ const Categories = () => {
     const fetchCategories = async () => {
         try {
             const res = await Api().get("/categories");
-            //   console.log(res.data);
             setCategories(res.data);
         } catch (error) {
-            console.log("Error featch categories: ", error);
+            console.log("Error fetch categories: ", error);
         }
     };
 
@@ -57,7 +56,6 @@ const Categories = () => {
                     </Tr>
                 </Tfoot>
             </Table>
-
 
             <Outlet/>
         </>

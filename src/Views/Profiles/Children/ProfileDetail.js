@@ -58,7 +58,7 @@ const ProfileDetail = () => {
                 title: 'Profile update success. Please check your profile!',
                 description: "OK",
                 status: 'success',
-                duration: 9000,
+                duration: 3000,
                 isClosable: true,
             })
             dispatch(getProfileDetail())
@@ -72,7 +72,7 @@ const ProfileDetail = () => {
                     title: 'Failed Update',
                     description: "Please try again input all field required!",
                     status: 'error',
-                    duration: 9000,
+                    duration: 3000,
                     isClosable: true,
                 })
             }
@@ -140,7 +140,7 @@ const ProfileDetail = () => {
                     <Input onChange={onChange} value={phone_number} type='tel' id='phone_number' name="phone_number"
                         placeholder='Phone number' />
                 </InputGroup>
-                <FormHelperText color={'red.500'} textAlign='left'>{error && error?.phone_number_number}</FormHelperText>
+                <FormHelperText color={'red.500'} textAlign='left'>{error && error?.phone_number}</FormHelperText>
             </FormControl>
 
             <FormControl isRequired>

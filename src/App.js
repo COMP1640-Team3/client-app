@@ -149,6 +149,7 @@ function App() {
                             <CategoryDetail/>
                         </CheckIsQaManager>}
                     />
+
                     {/* QA Coordinator*/}
                     <Route path="/qa-coordinator" element={<CheckIsQaCoordinator>
                         <QaCoordinator/>
@@ -173,6 +174,7 @@ function App() {
                         <Route path='hidden-ideas' element={<HiddenIdeas/>}/>
                         <Route path='hidden-ideas/:ideaId' element={<HiddenIdeaDetails/>}/>
                         <Route path='ideas-without-comments' element={<IdeaWithoutComments/>}/>
+                        <Route path='ideas-without-comments/:ideaId' element={<IdeaDetail/>}/>
 
                         {/*  Statistic  */}
                         <Route path='statistics' element={<StatisticsHome/>}/>
